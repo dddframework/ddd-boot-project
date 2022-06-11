@@ -1,0 +1,1 @@
+package com.github.ddd.common.pojo;import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;/** * 前端分页 * * @author ranger */@NoArgsConstructor@AllArgsConstructor@Datapublic class PageParam {    /**     * 页码 默认第一页     */    private int pageNo = 1;    /**     * 每页记录数 默认分页大小10     */    private int pageSize = 10;}
