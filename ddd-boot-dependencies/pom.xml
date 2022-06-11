@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.github.dddframework</groupId>
         <artifactId>ddd-boot-project</artifactId>
-        <version>${revision}</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>ddd-boot-dependencies</artifactId>
@@ -21,7 +21,7 @@
         <spring-boot.version>2.6.8</spring-boot.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
-        <hutool.version>5.8.2</hutool.version>
+        <hutool.version>5.8.3</hutool.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <springdoc.version>1.6.9</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
@@ -40,27 +40,27 @@
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-common</artifactId>
-                <version>${revision}</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-mybatis</artifactId>
-                <version>${revision}</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-quartz</artifactId>
-                <version>${revision}</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-web</artifactId>
-                <version>${revision}</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-microservice</artifactId>
-                <version>${revision}</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
 
 
