@@ -27,20 +27,14 @@ public class NumberValidator implements ConstraintValidator<ValidNumber, String>
         if (StrUtil.isBlank(value)) {
             return true;
         }
-
         boolean b = Validator.isNumber(value);
         if (b) {
             BigDecimal decimal = new BigDecimal(value).stripTrailingZeros();
             if (decimal.precision() > p) {
                 return false;
             }
-            if (decimal.scale() > d) {
-                return false;
-            }
-
-            return true;
+            return decimal.scale() <= d;
         }
-
         return false;
     }
 }

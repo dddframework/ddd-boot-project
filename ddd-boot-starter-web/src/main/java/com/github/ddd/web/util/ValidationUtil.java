@@ -26,7 +26,6 @@ public class ValidationUtil {
     public static <T> List<String> validate(T t) {
         assert t != null;
         Set<ConstraintViolation<T>> validationSet = VALIDATOR.validate(t, Default.class);
-        String message = null;
         List<String> errors = new ArrayList<>();
         if (validationSet != null && validationSet.size() > 0) {
             ConstraintViolation<T> violation = validationSet.iterator().next();
