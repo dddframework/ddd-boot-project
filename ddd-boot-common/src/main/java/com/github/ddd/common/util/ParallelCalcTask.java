@@ -1,5 +1,6 @@
 package com.github.ddd.common.util;
 
+import com.github.ddd.common.exception.SystemException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class ParallelCalcTask<T, R> {
             try {
                 result.add(task.get());
             } catch (Exception e) {
-                throw new RuntimeException("获取结果失败", e);
+                throw new SystemException("获取结果失败", e);
             }
         }
         todoTask.clear();

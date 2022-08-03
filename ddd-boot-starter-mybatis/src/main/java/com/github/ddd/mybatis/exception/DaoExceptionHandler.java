@@ -28,7 +28,7 @@ public class DaoExceptionHandler {
     @ExceptionHandler(DuplicateKeyException.class)
     @ResponseBody
     public ServerResponse<?> handlerDuplicateKeyException(HttpServletRequest request, DuplicateKeyException e) {
-        log.error("请求路径 {}, 重复数据异常: {}", request.getRequestURI(), e);
+        log.warn("请求路径 {}, 重复数据异常: {}", request.getRequestURI(), e.getMessage());
         return ServerResponse.createWarnMsg("存在重复数据");
     }
 

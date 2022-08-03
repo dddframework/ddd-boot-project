@@ -1,6 +1,7 @@
 package com.github.ddd.common.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.ddd.common.exception.ErrorCodeEnum;
 import lombok.Data;
 
 /**

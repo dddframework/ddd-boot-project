@@ -21,6 +21,8 @@
         <module>ddd-boot-starter-microservice</module>
         <module>ddd-boot-starter-web</module>
         <module>ddd-boot-starter-quartz</module>
+        <module>ddd-boot-starter-validation</module>
+        <module>ddd-boot-starter-security</module>
     </modules>
 
     <properties>

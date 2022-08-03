@@ -363,4 +363,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         super.notBetween(column, val1, val2);
         return this;
     }
+
+
 }
