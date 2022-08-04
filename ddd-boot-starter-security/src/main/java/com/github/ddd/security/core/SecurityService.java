@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @RequiredArgsConstructor
-public class SecuritySevice {
+public class SecurityService {
 
 
     private static final String ID_KEY = "login:";
