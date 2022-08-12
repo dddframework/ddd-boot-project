@@ -1,26 +1,37 @@
 package com.github.ddd.common.util.tree;
 
+import java.util.List;
+
 /**
  * 树节点
- * @author ranger
+ *
  * @param <T>
+ * @author ranger
  */
-public interface Node<T> {
+public interface TreeNode<T> {
     /**
      * 节点ID
+     *
      * @return
      */
     T getId();
 
     /**
      * 节点名称
+     *
      * @return
      */
     String getNodeName();
 
     /**
      * 父节点ID
+     *
      * @return
      */
     T getPid();
+
+    List<TreeNode<T>> getChildren();
+
+
+    void setChildren(List<TreeNode<T>> treeNodes);
 }
