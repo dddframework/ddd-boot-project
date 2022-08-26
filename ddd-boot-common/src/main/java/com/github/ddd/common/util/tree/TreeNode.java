@@ -30,7 +30,7 @@ public interface TreeNode<T> {
      */
     T getPid();
 
-    List<TreeNode<T>> getChildren();
+    List<? extends TreeNode> getChildren();
 
 
     void setChildren(List<TreeNode<T>> treeNodes);
