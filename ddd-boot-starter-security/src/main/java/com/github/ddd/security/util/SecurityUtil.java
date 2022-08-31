@@ -42,17 +42,8 @@ public class SecurityUtil {
      *
      * @return
      */
-    public static Long getUserId() {
+    public static String getUserId() {
         return USER_CONTEXT.get().getUserId();
-    }
-
-    /**
-     * 获取当前登录用户租户ID
-     *
-     * @return
-     */
-    public static Long getTenantId() {
-        return USER_CONTEXT.get().getTenant().getId();
     }
 
 

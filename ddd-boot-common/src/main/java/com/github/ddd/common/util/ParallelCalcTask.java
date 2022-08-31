@@ -2,7 +2,6 @@ package com.github.ddd.common.util;
 
 import com.github.ddd.common.exception.SystemException;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class ParallelCalcTask<T, R> {
      * 投递任务
      */
     private synchronized void deliveryTask() {
-        if (threadPool == null){
+        if (threadPool == null) {
             int availableProcessors = Runtime.getRuntime().availableProcessors();
             threadPool = new ThreadPoolExecutor(availableProcessors, availableProcessors, 60L, TimeUnit.SECONDS,
                     new ArrayBlockingQueue<>(1000), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());

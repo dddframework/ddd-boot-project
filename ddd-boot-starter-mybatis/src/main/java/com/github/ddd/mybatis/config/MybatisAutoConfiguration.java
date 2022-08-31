@@ -26,7 +26,6 @@ public class MybatisAutoConfiguration {
 
     /**
      * 分页插件
-     *
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -46,6 +45,7 @@ public class MybatisAutoConfiguration {
 
     /**
      * DAO层异常处理
+     *
      * @return
      */
     @Bean

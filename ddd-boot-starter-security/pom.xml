@@ -12,14 +12,13 @@
 
     <artifactId>ddd-boot-starter-security</artifactId>
 
+    <packaging>jar</packaging>
+    <name>DDD Framework Security</name>
+    <description>DDD Framework Security</description>
     <dependencies>
         <dependency>
             <groupId>io.github.dddframework</groupId>
             <artifactId>ddd-boot-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

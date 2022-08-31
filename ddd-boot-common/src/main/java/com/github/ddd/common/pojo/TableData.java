@@ -37,7 +37,7 @@ public class TableData<T> {
      * 转换集合数据
      *
      * @param list Collection
-     * @param <T> T
+     * @param <T>  T
      * @return T
      */
     public static <T> TableData<T> of(Collection<T> list) {
@@ -53,7 +53,7 @@ public class TableData<T> {
      * 转换 TableData
      *
      * @param mapper Function
-     * @param <E> E
+     * @param <E>    E
      * @return E
      */
     public <E> TableData<E> transform(Function<T, E> mapper) {

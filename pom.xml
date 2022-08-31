@@ -23,6 +23,9 @@
         <module>ddd-boot-starter-quartz</module>
         <module>ddd-boot-starter-validation</module>
         <module>ddd-boot-starter-security</module>
+        <module>ddd-boot-starter-tinyid</module>
+        <module>ddd-boot-starter-minio</module>
+        <module>ddd-boot-starter-xxl-job</module>
     </modules>
 
     <properties>

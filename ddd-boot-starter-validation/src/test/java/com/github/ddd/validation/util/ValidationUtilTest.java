@@ -17,7 +17,7 @@ class ValidationUtilTest {
         private String field_2;
         @ValidEmail
         private String field_3;
-        @ValidEnum(option = {"a","b"})
+        @ValidEnum(option = {"a", "b"})
         private String field_4;
         @ValidIdCard
         private String field_5;

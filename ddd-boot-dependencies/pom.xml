@@ -23,9 +23,13 @@
         <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
         <hutool.version>5.8.3</hutool.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
+
         <springdoc.version>1.6.9</springdoc.version>
         <knife4j.version>3.0.3</knife4j.version>
+
         <lock4j.version>2.2.2</lock4j.version>
+        <xxljob.version>2.3.1</xxljob.version>
+        <minio.version>8.0.0</minio.version>
     </properties>
 
 
@@ -68,6 +72,26 @@
                 <artifactId>ddd-boot-starter-microservice</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.dddframework</groupId>
+                <artifactId>ddd-boot-starter-security</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.dddframework</groupId>
+                <artifactId>ddd-boot-starter-tinyid</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.dddframework</groupId>
+                <artifactId>ddd-boot-starter-minio</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.dddframework</groupId>
+                <artifactId>ddd-boot-starter-xxl-job</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
 
 
             <dependency>
@@ -94,13 +118,6 @@
 
 
             <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-bom</artifactId>
-                <version>${hutool.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
@@ -122,6 +139,25 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
                 <version>${lock4j.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxljob.version}</version>
+            </dependency>
+            <!-- minio -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

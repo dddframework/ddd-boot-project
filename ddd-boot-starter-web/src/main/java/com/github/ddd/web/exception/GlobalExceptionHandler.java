@@ -1,6 +1,9 @@
 package com.github.ddd.web.exception;
 
-import com.github.ddd.common.exception.*;
+import com.github.ddd.common.exception.ClientException;
+import com.github.ddd.common.exception.ErrorCodeEnum;
+import com.github.ddd.common.exception.ServiceException;
+import com.github.ddd.common.exception.SystemException;
 import com.github.ddd.common.pojo.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -40,30 +43,6 @@ public class GlobalExceptionHandler {
     public ServerResponse<?> handleClientException(HttpServletRequest request, ClientException e) {
         log.warn("请求路径 {}, 用户端异常: {} ", request.getRequestURI(), e.getMessage());
         return ServerResponse.createErrorMsg(e.getMessage());
-    }
-
-    @ExceptionHandler(NoLoginException.class)
-    @ResponseBody
-    public ServerResponse<?> handleNoLoginException(HttpServletRequest request, NoLoginException e) {
-        log.warn("请求路径 {}, 未登录异常: {} ", request.getRequestURI(), e.getMessage());
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.NO_LOGIN.getCode());
-        response.setErrorMessage(ErrorCodeEnum.NO_LOGIN.getDescription());
-        response.setShowType(ServerResponse.ShowType.ERROR);
-        return response;
-    }
-
-    @ExceptionHandler(NoPermitException.class)
-    @ResponseBody
-    public ServerResponse<?> handleNoPermitException(HttpServletRequest request, NoPermitException e) {
-        log.warn("请求路径 {}, 没有权限异常: {} ", request.getRequestURI(), e.getMessage());
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.NO_PERMIT.getCode());
-        response.setErrorMessage(ErrorCodeEnum.NO_PERMIT.getDescription());
-        response.setShowType(ServerResponse.ShowType.ERROR);
-        return response;
     }
 
     @ExceptionHandler(SystemException.class)
