@@ -3,7 +3,7 @@ package com.github.ddd.security.filter;
 import cn.hutool.core.util.StrUtil;
 import com.github.ddd.security.core.SecurityService;
 import com.github.ddd.security.pojo.UserDetail;
-import com.github.ddd.security.util.SecurityUtil;
+import com.github.ddd.security.util.UserContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,7 +28,7 @@ public class UserContextFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         UserDetail currentUser = parseUserHeader(request);
         if (currentUser != null) {
-            SecurityUtil.setUserContext(currentUser);
+            UserContextHolder.setUserContext(currentUser);
         }
         filterChain.doFilter(request, response);
     }
@@ -36,8 +36,8 @@ public class UserContextFilter extends OncePerRequestFilter {
     /**
      * 解析UserDetail
      *
-     * @param
-     * @return
+     * @param request
+     * @return UserDetail
      */
     public UserDetail parseUserHeader(HttpServletRequest request) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);

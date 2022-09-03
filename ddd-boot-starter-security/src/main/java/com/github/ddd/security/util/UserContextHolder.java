@@ -7,14 +7,14 @@ import com.github.ddd.security.pojo.UserDetail;
  *
  * @author ranger
  */
-public class SecurityUtil {
+public class UserContextHolder {
 
     private static final ThreadLocal<UserDetail> USER_CONTEXT = new ThreadLocal<>();
 
     /**
      * 设置用户上下文
      *
-     * @param user
+     * @param user 用户
      */
     public static void setUserContext(UserDetail user) {
         USER_CONTEXT.remove();
@@ -22,16 +22,9 @@ public class SecurityUtil {
     }
 
     /**
-     * 防止内存泄漏
-     */
-    public static void remove() {
-        USER_CONTEXT.remove();
-    }
-
-    /**
      * 获取User
      *
-     * @return
+     * @return UserDetail
      */
     public static UserDetail getCurrentUser() {
         return USER_CONTEXT.get();
@@ -40,11 +33,28 @@ public class SecurityUtil {
     /**
      * 获取当前登录用户ID
      *
-     * @return
+     * @return UserId
      */
     public static String getUserId() {
         return USER_CONTEXT.get().getUserId();
     }
 
+    /**
+     * 获取当前登录用户ID
+     *
+     * @return UserId
+     */
+    public static Long getUserIdAsLong() {
+        return Long.valueOf(getUserId());
+    }
 
+
+    /**
+     * 获取当前登录用户ID
+     *
+     * @return UserId
+     */
+    public static Integer getUserIdAsInt() {
+        return Integer.valueOf(getUserId());
+    }
 }

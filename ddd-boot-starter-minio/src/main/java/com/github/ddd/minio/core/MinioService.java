@@ -103,7 +103,7 @@ public class MinioService {
                 try {
                     stream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("minio close IOException", e);
                 }
             }
             if (out != null) {

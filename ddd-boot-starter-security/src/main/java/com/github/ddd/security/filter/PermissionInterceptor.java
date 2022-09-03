@@ -3,7 +3,7 @@ package com.github.ddd.security.filter;
 import com.github.ddd.security.annotation.CheckPermission;
 import com.github.ddd.security.annotation.NotLogin;
 import com.github.ddd.security.pojo.UserDetail;
-import com.github.ddd.security.util.SecurityUtil;
+import com.github.ddd.security.util.UserContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
@@ -35,7 +35,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
             return true;
         }
         // 需要登录
-        UserDetail currentUser = SecurityUtil.getCurrentUser();
+        UserDetail currentUser = UserContextHolder.getCurrentUser();
         if (currentUser == null) {
             this.outputError(response, HttpStatus.UNAUTHORIZED);
             return false;

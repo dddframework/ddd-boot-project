@@ -12,10 +12,10 @@ import java.util.Set;
  */
 public class ValidationUtil {
 
-    private static final Validator validator;
+    private static final Validator VALIDATOR;
 
     static {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
+        VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
     }
 
     /**
@@ -24,7 +24,7 @@ public class ValidationUtil {
      * @return {@link Validator} 对象
      */
     public static Validator getValidator() {
-        return validator;
+        return VALIDATOR;
     }
 
     /**
@@ -36,7 +36,7 @@ public class ValidationUtil {
      * @return {@link Set}
      */
     public static <T> Set<ConstraintViolation<T>> validate(T bean, Class<?>... groups) {
-        return validator.validate(bean, groups);
+        return VALIDATOR.validate(bean, groups);
     }
 
 

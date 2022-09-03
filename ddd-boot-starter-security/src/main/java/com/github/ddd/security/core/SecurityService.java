@@ -4,10 +4,10 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.lock.annotation.Lock4j;
 import com.github.ddd.common.util.JacksonUtil;
+import com.github.ddd.security.config.SecurityProperties;
 import com.github.ddd.security.pojo.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,15 +16,27 @@ import java.util.concurrent.TimeUnit;
  *
  * @author ranger
  */
-@Service
 @RequiredArgsConstructor
 public class SecurityService {
 
 
-    private static final String ID_KEY = "login:";
-    private static final String TOKEN_KEY = "token:";
+    private static final String ID_KEY = "login:%s:%s";
+    private static final String TOKEN_KEY = "token:%s";
+    private static final String DEFAULT_CLIENT = "default";
 
     private final StringRedisTemplate stringRedisTemplate;
+
+    private final SecurityProperties securityProperties;
+
+    /**
+     * 获取会话时间
+     *
+     * @return sessionTime
+     */
+    public Long getSessionTime() {
+        Long sessionTime = securityProperties.getSessionTime();
+        return sessionTime == null ? 24L : sessionTime;
+    }
 
     /**
      * 退出登录
@@ -33,7 +45,7 @@ public class SecurityService {
      * @param clientId 客户端
      */
     public void logout(String userId, String clientId) {
-        String loginKey = ID_KEY + clientId + ":" + userId;
+        String loginKey = String.format(ID_KEY, userId, clientId);
         String token = stringRedisTemplate.opsForValue().get(loginKey);
         if (StrUtil.isNotBlank(token)) {
             String tokenKey = TOKEN_KEY + token;
@@ -46,18 +58,22 @@ public class SecurityService {
      * 登录
      *
      * @param user 用户信息
-     * @return
+     * @return token
      */
-    @Lock4j(keys = {"#user.userId", "#user.clientId"}, name = "login")
+    @Lock4j(keys = {"#user.userId"}, name = "login")
     public String login(UserDetail user) {
         String userId = user.getUserId();
         String clientId = user.getClientId();
+        if (StrUtil.isBlank(clientId)){
+            clientId = DEFAULT_CLIENT;
+        }
         this.logout(userId, clientId);
-        String loginKey = ID_KEY + clientId + ":" + userId;
+        String loginKey = String.format(ID_KEY, userId, clientId);
         String token = IdUtil.fastSimpleUUID();
-        String tokenKey = TOKEN_KEY + token;
-        stringRedisTemplate.opsForValue().set(tokenKey, JacksonUtil.toJsonStr(user), 12L, TimeUnit.HOURS);
-        stringRedisTemplate.opsForValue().set(loginKey, token, 12L, TimeUnit.HOURS);
+        String tokenKey = String.format(TOKEN_KEY, token);
+        Long sessionTime = getSessionTime();
+        stringRedisTemplate.opsForValue().set(tokenKey, JacksonUtil.toJsonStr(user), sessionTime, TimeUnit.HOURS);
+        stringRedisTemplate.opsForValue().set(loginKey, token, sessionTime, TimeUnit.HOURS);
         return token;
     }
 
@@ -68,13 +84,14 @@ public class SecurityService {
      * @param userId   用户ID
      * @param clientId 客户端
      */
-    public void renewal(String userId, String clientId) {
-        String loginKey = ID_KEY + clientId + ":" + userId;
+    private void renewal(String userId, String clientId) {
+        String loginKey = String.format(ID_KEY, userId, clientId);
         String token = stringRedisTemplate.opsForValue().get(loginKey);
         if (StrUtil.isNotBlank(token)) {
-            String tokenKey = TOKEN_KEY + token;
-            stringRedisTemplate.expire(loginKey, 12L, TimeUnit.HOURS);
-            stringRedisTemplate.expire(tokenKey, 12L, TimeUnit.HOURS);
+            String tokenKey = String.format(TOKEN_KEY, token);
+            Long sessionTime = getSessionTime();
+            stringRedisTemplate.expire(loginKey, sessionTime, TimeUnit.HOURS);
+            stringRedisTemplate.expire(tokenKey, sessionTime, TimeUnit.HOURS);
         }
     }
 
@@ -82,10 +99,10 @@ public class SecurityService {
      * 解析用户信息
      *
      * @param token 令牌
-     * @return Token
+     * @return UserDetail
      */
     public UserDetail parseToken(String token) {
-        String tokenKey = TOKEN_KEY + token;
+        String tokenKey = String.format(TOKEN_KEY, token);
         String str = stringRedisTemplate.opsForValue().get(tokenKey);
         if (StrUtil.isNotBlank(str)) {
             UserDetail data = JacksonUtil.toBean(str, UserDetail.class);

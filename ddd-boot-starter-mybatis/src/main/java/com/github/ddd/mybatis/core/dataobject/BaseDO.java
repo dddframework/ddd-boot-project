@@ -38,10 +38,4 @@ public class BaseDO implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updaterId;
-
-    /**
-     * 租户ID
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Long tenantId;
 }
