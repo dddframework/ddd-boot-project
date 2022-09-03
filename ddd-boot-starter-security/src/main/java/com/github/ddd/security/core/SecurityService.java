@@ -44,7 +44,7 @@ public class SecurityService {
      * @param userId   用户ID
      * @param clientId 客户端
      */
-    public void logout(String userId, String clientId) {
+    public void logout(Long userId, String clientId) {
         String loginKey = String.format(ID_KEY, userId, clientId);
         String token = stringRedisTemplate.opsForValue().get(loginKey);
         if (StrUtil.isNotBlank(token)) {
@@ -65,7 +65,7 @@ public class SecurityService {
         if (StrUtil.isBlank(user.getClientId())) {
             user.setClientId(DEFAULT_CLIENT);
         }
-        String userId = user.getUserId();
+        Long userId = user.getUserId();
         String clientId = user.getClientId();
         this.logout(userId, clientId);
         String loginKey = String.format(ID_KEY, userId, clientId);
@@ -84,7 +84,7 @@ public class SecurityService {
      * @param userId   用户ID
      * @param clientId 客户端
      */
-    private void renewal(String userId, String clientId) {
+    private void renewal(Long userId, String clientId) {
         String loginKey = String.format(ID_KEY, userId, clientId);
         String token = stringRedisTemplate.opsForValue().get(loginKey);
         if (StrUtil.isNotBlank(token)) {
@@ -106,7 +106,7 @@ public class SecurityService {
         String str = stringRedisTemplate.opsForValue().get(tokenKey);
         if (StrUtil.isNotBlank(str)) {
             UserDetail data = JacksonUtil.toBean(str, UserDetail.class);
-            String userId = data.getUserId();
+            Long userId = data.getUserId();
             String clientId = data.getClientId();
             this.renewal(userId, clientId);
             return data;

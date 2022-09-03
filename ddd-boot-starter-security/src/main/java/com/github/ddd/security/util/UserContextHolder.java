@@ -35,26 +35,8 @@ public class UserContextHolder {
      *
      * @return UserId
      */
-    public static String getUserId() {
+    public static Long getUserId() {
         return USER_CONTEXT.get().getUserId();
     }
 
-    /**
-     * 获取当前登录用户ID
-     *
-     * @return UserId
-     */
-    public static Long getUserIdAsLong() {
-        return Long.valueOf(getUserId());
-    }
-
-
-    /**
-     * 获取当前登录用户ID
-     *
-     * @return UserId
-     */
-    public static Integer getUserIdAsInt() {
-        return Integer.valueOf(getUserId());
-    }
 }

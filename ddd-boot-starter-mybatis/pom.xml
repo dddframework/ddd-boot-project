@@ -27,6 +27,10 @@
             <groupId>io.github.dddframework</groupId>
             <artifactId>ddd-boot-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.dddframework</groupId>
+            <artifactId>ddd-boot-starter-security</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

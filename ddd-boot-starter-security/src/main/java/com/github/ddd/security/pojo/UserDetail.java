@@ -18,7 +18,7 @@ public class UserDetail {
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
     /**
      * 用户名
      */
@@ -35,4 +35,25 @@ public class UserDetail {
      * 其他属性
      */
     private Map<String, Object> properties = new HashMap<>();
+
+    /**
+     * 创建系统用户
+     *
+     * @return UserDetail
+     */
+    public static UserDetail createSystemUser() {
+        return createCustomUser(0L, "系统");
+    }
+
+    /**
+     * 创建自定义用户
+     *
+     * @return UserDetail
+     */
+    public static UserDetail createCustomUser(Long userId, String username) {
+        UserDetail userDetail = new UserDetail();
+        userDetail.setUserId(userId);
+        userDetail.setUsername(username);
+        return userDetail;
+    }
 }

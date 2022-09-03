@@ -20,13 +20,6 @@ public class BaseDO implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT)
     private Long createTime;
-
-    /**
-     * 最后更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateTime;
-
     /**
      * 创建者id
      */
@@ -34,8 +27,25 @@ public class BaseDO implements Serializable {
     private Long creatorId;
 
     /**
+     * 创建者姓名
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private String creatorName;
+    /**
      * 更新者id
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updaterId;
+    /**
+     * 更新者姓名
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private String updaterName;
+    /**
+     * 最后更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Long updateTime;
+
+
 }
