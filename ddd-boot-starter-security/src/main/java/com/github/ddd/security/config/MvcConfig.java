@@ -5,8 +5,6 @@ import com.github.ddd.security.core.SecurityService;
 import com.github.ddd.security.filter.PermissionInterceptor;
 import com.github.ddd.security.filter.UserContextFilter;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Order;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +17,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 /**
- * @author 研发中心-彭幸园
- * @version 1.0
- * @packageName com.shocksoft.component.user.config
- * @fileName MvcConfig
- * @createTime 2022/8/17 10:11
- * @Copyright © 2021 Shocksoft
+ * @author ranger
  */
 @RequiredArgsConstructor
 @Configuration
-@Order(99)
 @EnableWebMvc
 @EnableConfigurationProperties(SecurityProperties.class)
 public class MvcConfig implements WebMvcConfigurer {

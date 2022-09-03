@@ -48,7 +48,7 @@ public class SecurityService {
         String loginKey = String.format(ID_KEY, userId, clientId);
         String token = stringRedisTemplate.opsForValue().get(loginKey);
         if (StrUtil.isNotBlank(token)) {
-            String tokenKey = TOKEN_KEY + token;
+            String tokenKey = String.format(TOKEN_KEY, token);
             stringRedisTemplate.delete(tokenKey);
             stringRedisTemplate.delete(loginKey);
         }
@@ -62,11 +62,11 @@ public class SecurityService {
      */
     @Lock4j(keys = {"#user.userId"}, name = "login")
     public String login(UserDetail user) {
+        if (StrUtil.isBlank(user.getClientId())) {
+            user.setClientId(DEFAULT_CLIENT);
+        }
         String userId = user.getUserId();
         String clientId = user.getClientId();
-        if (StrUtil.isBlank(clientId)){
-            clientId = DEFAULT_CLIENT;
-        }
         this.logout(userId, clientId);
         String loginKey = String.format(ID_KEY, userId, clientId);
         String token = IdUtil.fastSimpleUUID();
