@@ -20,8 +20,8 @@ import java.util.concurrent.TimeUnit;
 public class SecurityService {
 
 
-    private static final String ID_KEY = "login:%s:%s";
-    private static final String TOKEN_KEY = "token:%s";
+    private static final String ID_KEY = "login_id:%s:%s";
+    private static final String TOKEN_KEY = "login_token:%s";
     private static final String DEFAULT_CLIENT = "default";
 
     private final StringRedisTemplate stringRedisTemplate;
@@ -60,7 +60,7 @@ public class SecurityService {
      * @param user 用户信息
      * @return token
      */
-    @Lock4j(keys = {"#user.userId"}, name = "login")
+    @Lock4j(keys = "#user.userId", name = "login")
     public String login(UserDetail user) {
         if (StrUtil.isBlank(user.getClientId())) {
             user.setClientId(DEFAULT_CLIENT);
