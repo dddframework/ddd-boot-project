@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ddd.common.exception.SystemException;
 
 /**
  * JSON 工具
@@ -42,7 +43,7 @@ public class JacksonUtil {
         try {
             return MAPPER.readValue(jsonArray, typeReference);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("json convert error", e);
+            throw new SystemException("json convert error", e);
         }
     }
 
@@ -58,7 +59,7 @@ public class JacksonUtil {
         try {
             return MAPPER.readValue(jsonString, beanClass);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("json convert error", e);
+            throw new SystemException("json convert error", e);
         }
     }
 
@@ -72,7 +73,7 @@ public class JacksonUtil {
         try {
             return MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("json convert error", e);
+            throw new SystemException("json convert error", e);
         }
     }
 
@@ -86,7 +87,7 @@ public class JacksonUtil {
         try {
             return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("json convert error", e);
+            throw new SystemException("json convert error", e);
         }
     }
 }

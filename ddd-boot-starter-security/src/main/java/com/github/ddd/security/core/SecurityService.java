@@ -29,16 +29,6 @@ public class SecurityService {
     private final SecurityProperties securityProperties;
 
     /**
-     * 获取会话时间
-     *
-     * @return sessionTime
-     */
-    public Long getSessionTime() {
-        Long sessionTime = securityProperties.getSessionTime();
-        return sessionTime == null ? 24L : sessionTime;
-    }
-
-    /**
      * 退出登录
      *
      * @param userId   用户ID
@@ -67,11 +57,13 @@ public class SecurityService {
         }
         Long userId = user.getUserId();
         String clientId = user.getClientId();
-        this.logout(userId, clientId);
+        if (!securityProperties.isConcurrent()) {
+            this.logout(userId, clientId);
+        }
         String loginKey = String.format(ID_KEY, userId, clientId);
         String token = IdUtil.fastSimpleUUID();
         String tokenKey = String.format(TOKEN_KEY, token);
-        Long sessionTime = getSessionTime();
+        Long sessionTime = securityProperties.getSessionTime();
         stringRedisTemplate.opsForValue().set(tokenKey, JacksonUtil.toJsonStr(user), sessionTime, TimeUnit.HOURS);
         stringRedisTemplate.opsForValue().set(loginKey, token, sessionTime, TimeUnit.HOURS);
         return token;
@@ -89,7 +81,7 @@ public class SecurityService {
         String token = stringRedisTemplate.opsForValue().get(loginKey);
         if (StrUtil.isNotBlank(token)) {
             String tokenKey = String.format(TOKEN_KEY, token);
-            Long sessionTime = getSessionTime();
+            Long sessionTime = securityProperties.getSessionTime();
             stringRedisTemplate.expire(loginKey, sessionTime, TimeUnit.HOURS);
             stringRedisTemplate.expire(tokenKey, sessionTime, TimeUnit.HOURS);
         }

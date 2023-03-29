@@ -27,7 +27,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
             return;
         }
         HttpServletRequest request = attributes.getRequest();
-        if (headers != null) {
+        if (headers != null && headers.size() > 0) {
             for (String name : headers) {
                 String values = request.getHeader(name);
                 if (StrUtil.isNotBlank(values)) {

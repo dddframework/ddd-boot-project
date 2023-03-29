@@ -16,7 +16,11 @@ public class SecurityProperties {
      */
     private List<String> whiteList;
     /**
-     * 会话保持时间
+     * 会话保持时间 单位小时
      */
-    private Long sessionTime;
+    private Long sessionTime = 12L;
+    /**
+     * 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+     */
+    private boolean concurrent = true;
 }

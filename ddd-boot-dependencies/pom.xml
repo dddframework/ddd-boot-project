@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.github.dddframework</groupId>
         <artifactId>ddd-boot-project</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </parent>
 
     <artifactId>ddd-boot-dependencies</artifactId>
@@ -45,52 +45,52 @@
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-common</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-mybatis</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-quartz</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-web</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-validation</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-microservice</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-security</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-tinyid</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-minio</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-xxl-job</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.0</version>
             </dependency>
 
 

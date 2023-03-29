@@ -20,13 +20,21 @@ public class UserDetail {
      */
     private Long userId;
     /**
-     * 用户名
+     * 用户名/登录账户
      */
     private String username;
+    /**
+     * 用户姓名/昵称
+     */
+    private String nickname;
     /**
      * 登录客户端
      */
     private String clientId;
+    /**
+     * 租户ID
+     */
+    private Long tenantId;
     /**
      * 拥有权限码
      */
@@ -42,18 +50,25 @@ public class UserDetail {
      * @return UserDetail
      */
     public static UserDetail createSystemUser() {
-        return createCustomUser(0L, "系统");
+        UserDetail userDetail = new UserDetail();
+        userDetail.setUserId(0L);
+        userDetail.setUsername("系统");
+        userDetail.setNickname("系统");
+        return userDetail;
     }
 
+
     /**
-     * 创建自定义用户
+     * 创建系统用户
      *
      * @return UserDetail
      */
-    public static UserDetail createCustomUser(Long userId, String username) {
+    public static UserDetail createSystemUser(Long tenantId) {
         UserDetail userDetail = new UserDetail();
-        userDetail.setUserId(userId);
-        userDetail.setUsername(username);
+        userDetail.setUserId(0L);
+        userDetail.setUsername("系统");
+        userDetail.setNickname("系统");
+        userDetail.setTenantId(tenantId);
         return userDetail;
     }
 }

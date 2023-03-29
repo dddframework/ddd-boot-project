@@ -1,4 +1,4 @@
-package com.github.ddd.web.exception;
+package com.github.ddd.microservice.exception;
 
 import com.github.ddd.common.exception.ClientException;
 import com.github.ddd.common.exception.ErrorCodeEnum;

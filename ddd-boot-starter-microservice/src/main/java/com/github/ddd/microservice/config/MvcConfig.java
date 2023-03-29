@@ -1,12 +1,17 @@
-package com.github.ddd.web.config;
+package com.github.ddd.microservice.config;
 
-import com.github.ddd.web.exception.GlobalExceptionHandler;
+import com.github.ddd.microservice.exception.GlobalExceptionHandler;
+import com.github.ddd.microservice.feign.FeignRequestInterceptor;
+import feign.RequestInterceptor;
 import org.springdoc.core.GroupedOpenApi;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 /**
  * @author ranger
@@ -14,6 +19,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
+
+
+    @Value("${feign.headers}")
+    private List<String> headers;
+
+    @Bean
+    RequestInterceptor requestInterceptor() {
+        return new FeignRequestInterceptor(headers);
+    }
+
     /**
      * 如果不添加这个 GroupedOpenApi 实例，knife4j ui就显示不出来。
      */
@@ -29,6 +44,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public GlobalExceptionHandler globalExceptionHandler() {
         return new GlobalExceptionHandler();
     }
+
 
     /**
      * knife4j-放开Swagger文档

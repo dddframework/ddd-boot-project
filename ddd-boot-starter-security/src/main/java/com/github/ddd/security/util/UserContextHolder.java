@@ -39,4 +39,22 @@ public class UserContextHolder {
         return USER_CONTEXT.get().getUserId();
     }
 
+    /**
+     * 获取当前登录用户姓名
+     *
+     * @return Nickname
+     */
+    public static String getNickname() {
+        return USER_CONTEXT.get().getNickname();
+    }
+
+
+    /**
+     * 获取当前登录用户租户ID
+     *
+     * @return TenantId
+     */
+    public static Long getTenantId() {
+        return USER_CONTEXT.get().getTenantId();
+    }
 }

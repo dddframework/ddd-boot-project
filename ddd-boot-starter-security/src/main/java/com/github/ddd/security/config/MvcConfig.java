@@ -46,8 +46,10 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> whiteList = securityProperties.getWhiteList();
-        InterceptorRegistration registration = registry.addInterceptor(permissionInterceptor())
-                .addPathPatterns("/**");
+        InterceptorRegistration registration = registry
+                .addInterceptor(permissionInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/error", "/v3/api-docs/**");
         if (CollUtil.isNotEmpty(whiteList)) {
             registration.excludePathPatterns(whiteList);
         }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * bean 校验结果
@@ -58,5 +59,13 @@ public class BeanValidationResult {
          * 错误值
          */
         private Object value;
+    }
+
+    /**
+     * 获取校验错误信息 逗号拼接
+     * @return
+     */
+    public String joinErrorMessage(){
+        return this.errorMessages.stream().map(ErrorMessage::getMessage).collect(Collectors.joining(","));
     }
 }

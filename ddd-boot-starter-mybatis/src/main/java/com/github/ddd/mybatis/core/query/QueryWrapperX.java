@@ -1,9 +1,9 @@
 package com.github.ddd.mybatis.core.query;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 
 import java.util.Collection;
 
@@ -25,7 +25,7 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
      * @return
      */
     public QueryWrapperX<T> likeIfPresent(String column, String val) {
-        if (StringUtils.isNotBlank(val)) {
+        if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.like(column, val);
         }
         return this;
@@ -39,7 +39,7 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
      * @return
      */
     public QueryWrapperX<T> notLikeIfPresent(String column, String val) {
-        if (StringUtils.isNotBlank(val)) {
+        if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.notLike(column, val);
         }
         return this;
@@ -53,7 +53,7 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
      * @return
      */
     public QueryWrapperX<T> likeLeftIfPresent(String column, String val) {
-        if (StringUtils.isNotBlank(val)) {
+        if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.likeLeft(column, val);
         }
         return this;
@@ -67,7 +67,7 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
      * @return
      */
     public QueryWrapperX<T> likeRightIfPresent(String column, String val) {
-        if (StringUtils.isNotBlank(val)) {
+        if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.likeRight(column, val);
         }
         return this;
@@ -130,28 +130,7 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
     }
 
     /**
-     * 相等 忽略空白字符串
-     *
-     * @param column
-     * @param val
-     * @return
-     */
-    public QueryWrapperX<T> eqIfPresentAndNotBlankStr(String column, Object val) {
-        if (val != null) {
-            if (val instanceof String) {
-                String b = (String) val;
-                if (StringUtils.isNotBlank(b)) {
-                    return (QueryWrapperX<T>) super.eq(column, val);
-                }
-            } else {
-                return (QueryWrapperX<T>) super.eq(column, val);
-            }
-        }
-        return this;
-    }
-
-    /**
-     * 相等 不忽略空白字符串
+     * 相等
      *
      * @param column
      * @param val
@@ -159,7 +138,14 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
      */
     public QueryWrapperX<T> eqIfPresent(String column, Object val) {
         if (val != null) {
-            return (QueryWrapperX<T>) super.eq(column, val);
+            if (val instanceof String) {
+                String b = (String) val;
+                if (StrUtil.isNotBlank(b)) {
+                    return (QueryWrapperX<T>) super.eq(column, val);
+                }
+            } else {
+                return (QueryWrapperX<T>) super.eq(column, val);
+            }
         }
         return this;
     }
@@ -363,6 +349,4 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         super.notBetween(column, val1, val2);
         return this;
     }
-
-
 }
