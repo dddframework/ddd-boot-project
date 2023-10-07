@@ -1,11 +1,12 @@
 package com.github.ddd.common.pojo;
 
+import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 表格数据封装
@@ -32,6 +33,20 @@ public class TableData<T> {
      */
     private Collection<T> list;
 
+    /**
+     * 空表格
+     *
+     * @param <T> T
+     * @return T
+     */
+    public static <T> TableData<T> empty() {
+        TableData<T> tableData = new TableData<>();
+        tableData.setCurrent(1);
+        tableData.setTotal(0);
+        tableData.setPageSize(0);
+        tableData.setList(new ArrayList<>());
+        return tableData;
+    }
 
     /**
      * 转换集合数据
@@ -41,11 +56,14 @@ public class TableData<T> {
      * @return T
      */
     public static <T> TableData<T> of(Collection<T> list) {
+        if (CollUtil.isEmpty(list)) {
+            return empty();
+        }
         TableData<T> tableData = new TableData<>();
         tableData.setCurrent(1);
-        tableData.setTotal(list == null ? 0 : list.size());
-        tableData.setPageSize(list == null ? 0 : list.size());
-        tableData.setList(list == null ? new ArrayList<>() : list);
+        tableData.setTotal(list.size());
+        tableData.setPageSize(list.size());
+        tableData.setList(list);
         return tableData;
     }
 
@@ -61,8 +79,13 @@ public class TableData<T> {
         newTableData.setPageSize(this.getPageSize());
         newTableData.setCurrent(this.getCurrent());
         newTableData.setTotal(this.getTotal());
-        if (this.getList() != null) {
-            newTableData.setList(this.getList().stream().map(mapper).collect(Collectors.toList()));
+        List<E> list = new ArrayList<>();
+        newTableData.setList(list);
+        if (CollUtil.isNotEmpty(this.list)) {
+            for (T t : this.list) {
+                E newE = mapper.apply(t);
+                list.add(newE);
+            }
         }
         return newTableData;
     }

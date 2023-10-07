@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.github.dddframework</groupId>
         <artifactId>ddd-boot-project</artifactId>
-        <version>1.1.0</version>
+        <version>2.0.0</version>
     </parent>
 
     <artifactId>ddd-boot-dependencies</artifactId>
@@ -18,18 +18,16 @@
     <description>DDD Framework Dependencies</description>
 
     <properties>
-        <spring-boot.version>2.6.8</spring-boot.version>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.1.0</spring-cloud-alibaba.version>
-        <hutool.version>5.8.3</hutool.version>
+        <spring-boot.version>2.6.13</spring-boot.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+        <hutool.version>5.8.22</hutool.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
-
-        <springdoc.version>1.6.9</springdoc.version>
-        <knife4j.version>3.0.3</knife4j.version>
+        <knife4j.version>4.3.0</knife4j.version>
 
         <lock4j.version>2.2.2</lock4j.version>
         <xxljob.version>2.3.1</xxljob.version>
-        <minio.version>8.0.0</minio.version>
+        <minio.version>8.5.6</minio.version>
     </properties>
 
 
@@ -45,52 +43,52 @@
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-common</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-mybatis</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-quartz</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-web</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-validation</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-microservice</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-security</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-tinyid</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-minio</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.dddframework</groupId>
                 <artifactId>ddd-boot-starter-xxl-job</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.0</version>
             </dependency>
 
 
@@ -124,15 +122,11 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-springdoc-ui</artifactId>
+                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
+
 
 
             <dependency>

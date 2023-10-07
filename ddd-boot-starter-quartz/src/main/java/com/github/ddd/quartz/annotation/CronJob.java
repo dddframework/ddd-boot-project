@@ -1,4 +1,4 @@
-package com.github.ddd.quartz;
+package com.github.ddd.quartz.annotation;
 
 import org.quartz.CronTrigger;
 

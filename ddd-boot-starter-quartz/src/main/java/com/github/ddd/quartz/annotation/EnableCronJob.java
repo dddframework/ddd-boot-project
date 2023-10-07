@@ -1,5 +1,6 @@
-package com.github.ddd.quartz;
+package com.github.ddd.quartz.annotation;
 
+import com.github.ddd.quartz.CronJobRegistrar;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

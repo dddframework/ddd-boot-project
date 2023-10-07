@@ -42,8 +42,12 @@ public class GlobalExceptionHandler {
     public ServerResponse<?> handleClientException(HttpServletRequest request, ClientException e) {
         StackTraceElement[] stackTrace = e.getStackTrace();
         StackTraceElement root = stackTrace[0];
-        String codeInfo = root.getClassName() + "#" + root.getMethodName() + "#" + root.getLineNumber();
-        log.warn("请求路径 {}, 用户端异常: {}  对应代码 {}", request.getRequestURI(), e.getMessage(), codeInfo);
+        log.warn("请求路径 {}, 用户端异常: {}  对应代码 【{}】【{}】【{}】",
+                request.getRequestURI(),
+                e.getMessage(),
+                root.getClassName(),
+                root.getMethodName(),
+                root.getLineNumber());
         return ServerResponse.createErrorMsg(e.getMessage());
     }
 
@@ -52,8 +56,12 @@ public class GlobalExceptionHandler {
     public ServerResponse<?> handleSystemException(HttpServletRequest request, SystemException e) {
         StackTraceElement[] stackTrace = e.getStackTrace();
         StackTraceElement root = stackTrace[0];
-        String codeInfo = root.getClassName() + "#" + root.getMethodName() + "#" + root.getLineNumber();
-        log.warn("请求路径 {}, 业务异常: {}  对应代码 {}", request.getRequestURI(), e.getMessage(), codeInfo);
+        log.warn("请求路径 {}, 业务异常: {}  对应代码 【{}】【{}】【{}】",
+                request.getRequestURI(),
+                e.getMessage(),
+                root.getClassName(),
+                root.getMethodName(),
+                root.getLineNumber());
         ServerResponse<?> response = new ServerResponse<>();
         response.setSuccess(false);
         response.setErrorCode(ErrorCodeEnum.SYSTEM_ERROR.getCode());
@@ -67,8 +75,12 @@ public class GlobalExceptionHandler {
     public ServerResponse<?> handleServiceException(HttpServletRequest request, ServiceException e) {
         StackTraceElement[] stackTrace = e.getStackTrace();
         StackTraceElement root = stackTrace[0];
-        String codeInfo = root.getClassName() + "#" + root.getMethodName() + "#" + root.getLineNumber();
-        log.warn("请求路径 {}, 第三方服务异常: {}  对应代码 {}", request.getRequestURI(), e.getMessage(), codeInfo);
+        log.warn("请求路径 {}, 第三方服务异常: {}  对应代码 【{}】【{}】【{}】",
+                request.getRequestURI(),
+                e.getMessage(),
+                root.getClassName(),
+                root.getMethodName(),
+                root.getLineNumber());
         ServerResponse<?> response = new ServerResponse<>();
         response.setSuccess(false);
         response.setErrorCode(ErrorCodeEnum.SERVICE_ERROR.getCode());
@@ -80,9 +92,20 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ClientAbortException.class)
     @ResponseBody
-    public String handlerClientAbortException(HttpServletRequest request, ClientAbortException e) {
+    public void handlerClientAbortException(HttpServletRequest request, ClientAbortException e) {
         log.warn("请求路径 {}, 客户端主动断开异常 {}", request.getRequestURI(), e.getMessage());
-        return null;
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseBody
+    public ServerResponse<?> handleNullPointerException(HttpServletRequest request, NullPointerException e) {
+        log.error("请求路径 {}, 空引用异常: ", request.getRequestURI(), e);
+        ServerResponse<?> response = new ServerResponse<>();
+        response.setSuccess(false);
+        response.setErrorCode(ErrorCodeEnum.SYSTEM_ERROR.getCode());
+        response.setErrorMessage("空引用错误");
+        response.setShowType(ServerResponse.ShowType.ERROR);
+        return response;
     }
 
     @ExceptionHandler(Exception.class)

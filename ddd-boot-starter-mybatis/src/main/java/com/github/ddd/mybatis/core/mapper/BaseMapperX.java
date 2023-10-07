@@ -29,12 +29,7 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     default TableData<T> selectPage(PageParam pageParam, @Param("ew") Wrapper<T> queryWrapper) {
         IPage<T> mpPage = MyBatisUtils.buildPage(pageParam);
         selectPage(mpPage, queryWrapper);
-        TableData<T> tableData = new TableData<>();
-        tableData.setCurrent(pageParam.getPageNo());
-        tableData.setPageSize(pageParam.getPageSize());
-        tableData.setTotal(mpPage.getTotal());
-        tableData.setList(mpPage.getRecords());
-        return tableData;
+        return MyBatisUtils.toTableData(mpPage, pageParam);
     }
 
     /**

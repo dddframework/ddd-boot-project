@@ -15,6 +15,9 @@ import org.apache.ibatis.reflection.MetaObject;
  */
 public class DefaultDbFieldHandler implements MetaObjectHandler {
 
+    private static final Long NOT_LOGIN_ID = -1L;
+    private static final String NOT_LOGIN_NAME = "未登录用户";
+
     @Override
     public void insertFill(MetaObject metaObject) {
         if (metaObject == null) {
@@ -31,10 +34,10 @@ public class DefaultDbFieldHandler implements MetaObjectHandler {
                 baseDO.setUpdaterId(userId);
                 baseDO.setUpdaterName(nickname);
             } else {
-                baseDO.setCreatorId(0L);
-                baseDO.setCreatorName("系统");
-                baseDO.setUpdaterId(0L);
-                baseDO.setUpdaterName("系统");
+                baseDO.setCreatorId(NOT_LOGIN_ID);
+                baseDO.setCreatorName(NOT_LOGIN_NAME);
+                baseDO.setUpdaterId(NOT_LOGIN_ID);
+                baseDO.setUpdaterName(NOT_LOGIN_NAME);
             }
             if (baseDO.getCreateTime() == null) {
                 baseDO.setCreateTime(System.currentTimeMillis());
@@ -56,10 +59,10 @@ public class DefaultDbFieldHandler implements MetaObjectHandler {
                 baseTenantDO.setUpdaterName(nickname);
                 baseTenantDO.setTenantId(tenantId);
             } else {
-                baseTenantDO.setCreatorId(0L);
-                baseTenantDO.setCreatorName("系统");
-                baseTenantDO.setUpdaterId(0L);
-                baseTenantDO.setUpdaterName("系统");
+                baseTenantDO.setCreatorId(NOT_LOGIN_ID);
+                baseTenantDO.setCreatorName(NOT_LOGIN_NAME);
+                baseTenantDO.setUpdaterId(NOT_LOGIN_ID);
+                baseTenantDO.setUpdaterName(NOT_LOGIN_NAME);
             }
             if (baseTenantDO.getCreateTime() == null) {
                 baseTenantDO.setCreateTime(System.currentTimeMillis());

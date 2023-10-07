@@ -121,6 +121,19 @@ public class ServerResponse<T> {
         return response;
     }
 
+
+    /**
+     * Error失败响应
+     */
+    public static ServerResponse<?> createError(String code, String msg) {
+        ServerResponse<?> response = new ServerResponse<>();
+        response.setSuccess(false);
+        response.setErrorCode(code);
+        response.setErrorMessage(msg);
+        response.setShowType(ShowType.ERROR);
+        return response;
+    }
+
     /**
      * notification失败响应
      */

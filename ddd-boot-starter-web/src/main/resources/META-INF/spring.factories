@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.ddd.web.config.MvcConfig
+  com.github.ddd.web.exception.GlobalExceptionHandler

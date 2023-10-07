@@ -5,12 +5,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ddd.common.exception.SystemException;
+import lombok.extern.slf4j.Slf4j;
+
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Set;
 
 /**
  * JSON 工具
  *
  * @author ranger
  */
+@Slf4j
 public class JacksonUtil {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -43,8 +49,41 @@ public class JacksonUtil {
         try {
             return MAPPER.readValue(jsonArray, typeReference);
         } catch (JsonProcessingException e) {
+            log.error("json 转换失败 原字符串是 {}", jsonArray);
             throw new SystemException("json convert error", e);
         }
+    }
+
+    /**
+     * 转换List对象
+     *
+     * @param jsonArray String
+     * @param <T>       T
+     * @return T
+     */
+    public static <T> List<T> toList(String jsonArray, Class<T> tClass) {
+        return toCollection(jsonArray, new TypeReference<List<T>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+    }
+
+    /**
+     * 转换Set对象
+     *
+     * @param jsonArray String
+     * @param <T>       T
+     * @return T
+     */
+    public static <T> Set<T> toSet(String jsonArray, Class<T> tClass) {
+        return toCollection(jsonArray, new TypeReference<Set<T>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
     }
 
     /**
@@ -59,6 +98,7 @@ public class JacksonUtil {
         try {
             return MAPPER.readValue(jsonString, beanClass);
         } catch (JsonProcessingException e) {
+            log.error("json 转换失败 原字符串是 {}", jsonString);
             throw new SystemException("json convert error", e);
         }
     }
@@ -70,6 +110,9 @@ public class JacksonUtil {
      * @return String
      */
     public static String toJsonStr(Object obj) {
+        if (obj == null) {
+            return null;
+        }
         try {
             return MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
@@ -84,10 +127,14 @@ public class JacksonUtil {
      * @return String
      */
     public static String toPrettyJsonStr(Object obj) {
+        if (obj == null) {
+            return null;
+        }
         try {
             return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             throw new SystemException("json convert error", e);
         }
     }
+
 }

@@ -1,11 +1,14 @@
 package com.github.ddd.security.filter;
 
+import cn.hutool.json.JSONUtil;
+import com.github.ddd.common.pojo.ServerResponse;
 import com.github.ddd.security.annotation.CheckPermission;
 import com.github.ddd.security.annotation.NotLogin;
 import com.github.ddd.security.pojo.UserDetail;
 import com.github.ddd.security.util.UserContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -79,8 +82,9 @@ public class PermissionInterceptor implements HandlerInterceptor {
     private void outputError(HttpServletResponse response, HttpStatus httpStatus) throws IOException {
         response.reset();
         response.setStatus(httpStatus.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         PrintWriter out = response.getWriter();
-        out.print(httpStatus.getReasonPhrase());
+        out.print(JSONUtil.toJsonStr(ServerResponse.createError(String.valueOf(httpStatus.value()), httpStatus.getReasonPhrase())));
         out.flush();
         out.close();
     }

@@ -1,5 +1,7 @@
 package com.github.ddd.quartz;
 
+import com.github.ddd.quartz.annotation.CronJob;
+import com.github.ddd.quartz.annotation.EnableCronJob;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
@@ -70,6 +72,7 @@ public class CronJobRegistrar
                     Map<String, Object> attributes = annotationMetadata
                             .getAnnotationAttributes(
                                     CronJob.class.getCanonicalName());
+                    assert attributes != null;
                     String description = (String) attributes.get("description");
                     String cron = (String) attributes.get("cron");
                     int misfireInstruction = (int) attributes.get("misfireInstruction");
@@ -78,6 +81,7 @@ public class CronJobRegistrar
                         clazz = Class.forName(component.getBeanClassName());
                     } catch (ClassNotFoundException ignored) {
                     }
+                    assert clazz != null;
                     if (!QuartzJobBean.class.isAssignableFrom(clazz)) {
                         throw new RuntimeException("被CronJob标记的类不是QuartzJobBean的子类");
                     }

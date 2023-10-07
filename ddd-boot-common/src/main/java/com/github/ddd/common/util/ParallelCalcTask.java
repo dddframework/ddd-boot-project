@@ -2,6 +2,7 @@ package com.github.ddd.common.util;
 
 import com.github.ddd.common.exception.SystemException;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.function.Function;
  *
  * @author ranger
  */
+@Slf4j
 @Data
 public class ParallelCalcTask<T, R> {
 
@@ -64,6 +66,7 @@ public class ParallelCalcTask<T, R> {
             try {
                 result.add(task.get());
             } catch (Exception e) {
+                log.error("执行失败", e);
                 throw new SystemException("获取结果失败", e);
             }
         }
