@@ -25,7 +25,7 @@
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <knife4j.version>4.3.0</knife4j.version>
 
-        <lock4j.version>2.2.2</lock4j.version>
+        <lock4j.version>2.2.5</lock4j.version>
         <xxljob.version>2.3.1</xxljob.version>
         <minio.version>8.5.6</minio.version>
     </properties>

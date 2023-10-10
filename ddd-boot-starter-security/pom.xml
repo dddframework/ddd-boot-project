@@ -18,11 +18,11 @@
     <dependencies>
         <dependency>
             <groupId>io.github.dddframework</groupId>
-            <artifactId>ddd-boot-common</artifactId>
+            <artifactId>ddd-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
     </dependencies>
 </project>

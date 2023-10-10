@@ -23,7 +23,7 @@ public @interface CheckPermission {
     /**
      * 校验策略 AND OR
      *
-     * @return
+     * @return boolean
      */
     boolean and() default true;
 

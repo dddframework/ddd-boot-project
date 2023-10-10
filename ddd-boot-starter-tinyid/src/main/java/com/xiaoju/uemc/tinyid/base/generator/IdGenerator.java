@@ -9,15 +9,15 @@ public interface IdGenerator {
     /**
      * get next id
      *
-     * @return
+     * @return Long
      */
     Long nextId();
 
     /**
      * get next id batch
      *
-     * @param batchSize
-     * @return
+     * @param batchSize batchSize
+     * @return List<Long>
      */
     List<Long> nextId(Integer batchSize);
 }

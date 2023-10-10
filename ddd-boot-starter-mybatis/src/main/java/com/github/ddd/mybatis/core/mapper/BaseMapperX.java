@@ -22,9 +22,9 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 分页查询
      *
-     * @param pageParam
-     * @param queryWrapper
-     * @return
+     * @param pageParam pageParam
+     * @param queryWrapper queryWrapper
+     * @return TableData
      */
     default TableData<T> selectPage(PageParam pageParam, @Param("ew") Wrapper<T> queryWrapper) {
         IPage<T> mpPage = MyBatisUtils.buildPage(pageParam);
@@ -35,9 +35,9 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 查询单个
      *
-     * @param field
-     * @param value
-     * @return
+     * @param field field
+     * @param value value
+     * @return T
      */
     default T selectOne(String field, Object value) {
         return selectOne(new QueryWrapper<T>().eq(field, value));
@@ -46,9 +46,9 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 单个条件统计查询
      *
-     * @param field
-     * @param value
-     * @return
+     * @param field field
+     * @param value value
+     * @return long
      */
     default long selectCount(String field, Object value) {
         return selectCount(new QueryWrapper<T>().eq(field, value));
@@ -57,9 +57,9 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 单个条件删除
      *
-     * @param field
-     * @param value
-     * @return
+     * @param field field
+     * @param value value
+     * @return int
      */
     default int delete(String field, Object value) {
         return delete(new QueryWrapper<T>().eq(field, value));
@@ -68,9 +68,9 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 单个条件IN删除
      *
-     * @param field
-     * @param value
-     * @return
+     * @param field field
+     * @param value value
+     * @return int
      */
     default int deleteIn(String field, Collection<?> value) {
         return delete(new QueryWrapper<T>().in(field, value));
@@ -80,7 +80,7 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 查询全部
      *
-     * @return
+     * @return List<T>
      */
     default List<T> selectList() {
         return selectList(new QueryWrapper<>());
@@ -89,9 +89,9 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 单条件查询
      *
-     * @param field
-     * @param value
-     * @return
+     * @param field field
+     * @param value value
+     * @return List<T>
      */
     default List<T> selectList(String field, Object value) {
         return selectList(new QueryWrapper<T>().eq(field, value));
@@ -100,9 +100,9 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 单条件IN查询
      *
-     * @param field
-     * @param value
-     * @return
+     * @param field field
+     * @param value value
+     * @return List<T>
      */
     default List<T> selectListIn(String field, Collection<?> value) {
         return selectList(new QueryWrapper<T>().in(field, value));

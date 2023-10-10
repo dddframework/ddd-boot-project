@@ -30,16 +30,16 @@ public @interface ValidNumber {
     Class<? extends Payload>[] payload() default {};
 
     /**
-     * 有效整数位不超过？
+     * 有效整数位不超过
      *
-     * @return
+     * @return p
      */
     int p();
 
     /**
      * 有效小数位不超过
      *
-     * @return
+     * @return d
      */
     int d();
 }

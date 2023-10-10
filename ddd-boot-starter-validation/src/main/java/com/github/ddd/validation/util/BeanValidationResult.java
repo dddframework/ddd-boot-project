@@ -63,9 +63,10 @@ public class BeanValidationResult {
 
     /**
      * 获取校验错误信息 逗号拼接
-     * @return
+     *
+     * @return String
      */
-    public String joinErrorMessage(){
+    public String joinErrorMessage() {
         return this.errorMessages.stream().map(ErrorMessage::getMessage).collect(Collectors.joining(","));
     }
 }

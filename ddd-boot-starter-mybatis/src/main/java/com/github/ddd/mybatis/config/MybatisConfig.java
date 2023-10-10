@@ -35,7 +35,7 @@ public class MybatisConfig {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         // 启用多租户模式
         if (tenantProperties.isEnable()) {
-            String prefix = tenantProperties.getPrefix();
+            String prefix = tenantProperties.getSchemaPrefix();
             if (StrUtil.isBlank(prefix)){
                 throw new RuntimeException("多租户模式 前缀不能为空");
             }
@@ -43,7 +43,7 @@ public class MybatisConfig {
             dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
                 Long tenantId = UserContextHolder.getCurrentUser().getTenantId();
                 //`prefix`.`tableName`
-                return StrUtil.format("`{}_{}`.`{}`", prefix, tenantId, tableName);
+                return StrUtil.format("`{}{}`.`{}`", prefix, tenantId, tableName);
             });
             mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
         }
@@ -61,7 +61,6 @@ public class MybatisConfig {
 
     /**
      * 异常处理
-     * @return
      */
     @Bean
     public DaoExceptionHandler daoExceptionHandler() {

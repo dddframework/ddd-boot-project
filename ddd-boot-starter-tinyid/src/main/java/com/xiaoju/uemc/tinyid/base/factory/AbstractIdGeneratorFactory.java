@@ -29,8 +29,8 @@ public abstract class AbstractIdGeneratorFactory implements IdGeneratorFactory {
     /**
      * 根据bizType创建id生成器
      *
-     * @param bizType
-     * @return
+     * @param bizType bizType
+     * @return IdGenerator
      */
     protected abstract IdGenerator createIdGenerator(String bizType);
 }

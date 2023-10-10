@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 /**
- * @author 研发中心-彭幸园
+ * @author 研发中心-ranger
  */
 @Slf4j
 public class TreeUtil {
@@ -37,8 +37,8 @@ public class TreeUtil {
      * @param dataList  数据集
      * @param topId     顶级节点
      * @param sort      是否排序
-     * @param <T>
-     * @param <ID>
+     * @param <T> T
+     * @param <ID> ID
      * @return
      */
     public static <T extends Tree<ID>, ID> List<Tree<ID>> buildTree(List<T> dataList, ID topId, boolean sort) {

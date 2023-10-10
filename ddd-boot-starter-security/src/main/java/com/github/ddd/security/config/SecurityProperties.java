@@ -23,4 +23,8 @@ public class SecurityProperties {
      * 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
      */
     private boolean concurrent = true;
+    /**
+     * 缓存前缀
+     */
+    public String sessionPrefix = "ddd.sessions.";
 }

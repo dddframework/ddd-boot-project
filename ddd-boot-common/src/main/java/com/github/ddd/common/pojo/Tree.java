@@ -3,20 +3,20 @@ package com.github.ddd.common.pojo;
 import java.util.List;
 
 /**
- * @author 研发中心-彭幸园
+ * @author 研发中心-ranger
  */
 public interface Tree<ID> {
     /**
      * 获取ID
      *
-     * @return
+     * @return ID
      */
     ID id();
 
     /**
      * 获取PID
      *
-     * @return
+     * @return PID
      */
     ID pid();
 
@@ -24,28 +24,28 @@ public interface Tree<ID> {
     /**
      * 获取名称
      *
-     * @return
+     * @return name
      */
     String name();
 
     /**
      * 权重
      *
-     * @return
+     * @return weight
      */
     Integer weight();
 
     /**
      * 子节点
      *
-     * @return
+     * @return children
      */
     List<Tree<ID>> children();
 
     /**
      * 设置子集
      *
-     * @param children
+     * @param children children
      */
     void fillChildren(List<Tree<ID>> children);
 }

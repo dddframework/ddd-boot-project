@@ -2,13 +2,16 @@ package com.github.ddd.security.config;
 
 import cn.hutool.core.collection.CollUtil;
 import com.github.ddd.security.core.SecurityService;
+import com.github.ddd.security.core.SessionManager;
 import com.github.ddd.security.filter.PermissionInterceptor;
 import com.github.ddd.security.filter.UserContextFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -21,20 +24,25 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Configuration
+@EnableCaching
 @EnableWebMvc
 @EnableConfigurationProperties(SecurityProperties.class)
 public class MvcConfig implements WebMvcConfigurer {
 
     private final SecurityProperties securityProperties;
 
-
     @Bean
-    public SecurityService securityService(StringRedisTemplate stringRedisTemplate){
-        return new SecurityService(stringRedisTemplate, securityProperties);
+    public SessionManager securityService(CacheManager sessionManager) {
+        return new SessionManager(sessionManager, securityProperties);
     }
 
     @Bean
-    public UserContextFilter userContextFilter(SecurityService securityService){
+    public SecurityService securityService(SessionManager sessionManager) {
+        return new SecurityService(sessionManager, securityProperties);
+    }
+
+    @Bean
+    public UserContextFilter userContextFilter(SecurityService securityService) {
         return new UserContextFilter(securityService);
     }
 

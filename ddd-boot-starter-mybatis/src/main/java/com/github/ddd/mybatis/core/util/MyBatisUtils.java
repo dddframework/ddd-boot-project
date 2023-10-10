@@ -21,8 +21,8 @@ public class MyBatisUtils {
     /**
      * 不分页
      *
-     * @param <T>
-     * @return
+     * @param <T> T
+     * @return Page
      */
     public static <T> Page<T> buildNoPage() {
         Page<T> page = new Page<>();
@@ -36,9 +36,9 @@ public class MyBatisUtils {
     /**
      * 分页
      *
-     * @param pageParam
-     * @param <T>
-     * @return
+     * @param pageParam pageParam
+     * @param <T>       T
+     * @return Page
      */
     public static <T> Page<T> buildPage(PageParam pageParam) {
         if (pageParam.getPageNo() <= 0) {
@@ -50,8 +50,8 @@ public class MyBatisUtils {
     /**
      * 转换IPage
      *
-     * @param <T>
-     * @return
+     * @param <T> T
+     * @return TableData
      */
     public static <T> TableData<T> toTableData(IPage<T> data, PageParam pageParam) {
         TableData<T> tableData = new TableData<>();
@@ -65,10 +65,10 @@ public class MyBatisUtils {
     /**
      * 分页+排序
      *
-     * @param pageParam
-     * @param sortingFields
-     * @param <T>
-     * @return
+     * @param pageParam     pageParam
+     * @param sortingFields sortingFields
+     * @param <T>           T
+     * @return Page
      */
     public static <T> Page<T> buildPage(PageParam pageParam, Collection<SortingField> sortingFields) {
         // 页码 + 数量

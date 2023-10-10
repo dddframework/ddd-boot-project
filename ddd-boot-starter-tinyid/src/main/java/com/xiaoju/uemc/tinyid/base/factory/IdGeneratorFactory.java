@@ -9,8 +9,8 @@ public interface IdGeneratorFactory {
     /**
      * 根据bizType创建id生成器
      *
-     * @param bizType
-     * @return
+     * @param bizType bizType
+     * @return IdGenerator
      */
     IdGenerator getIdGenerator(String bizType);
 }

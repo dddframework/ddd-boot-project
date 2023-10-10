@@ -65,13 +65,10 @@ public class CronJobRegistrar
                     .findCandidateComponents(basePackage);
             for (BeanDefinition component : candidateComponents) {
                 if (component instanceof AnnotatedBeanDefinition) {
-                    // verify annotated class is an interface
                     AnnotatedBeanDefinition beanDefinition = (AnnotatedBeanDefinition) component;
                     AnnotationMetadata annotationMetadata = beanDefinition.getMetadata();
 
-                    Map<String, Object> attributes = annotationMetadata
-                            .getAnnotationAttributes(
-                                    CronJob.class.getCanonicalName());
+                    Map<String, Object> attributes = annotationMetadata.getAnnotationAttributes(CronJob.class.getCanonicalName());
                     assert attributes != null;
                     String description = (String) attributes.get("description");
                     String cron = (String) attributes.get("cron");
@@ -86,7 +83,6 @@ public class CronJobRegistrar
                         throw new RuntimeException("被CronJob标记的类不是QuartzJobBean的子类");
                     }
                     Class<? extends Job> jobClass = (Class<? extends Job>) clazz;
-
                     JobDetail jobDetail = JobBuilder.newJob(jobClass)
                             .withIdentity(component.getBeanClassName() + "|jobDetail", Scheduler.DEFAULT_GROUP)
                             .withDescription(description)
@@ -149,8 +145,7 @@ public class CronJobRegistrar
         }
 
         if (basePackages.isEmpty()) {
-            basePackages.add(
-                    ClassUtils.getPackageName(importingClassMetadata.getClassName()));
+            basePackages.add(ClassUtils.getPackageName(importingClassMetadata.getClassName()));
         }
         return basePackages;
     }

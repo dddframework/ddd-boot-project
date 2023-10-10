@@ -32,7 +32,7 @@ public @interface ValidEnum {
     /**
      * 可选项
      *
-     * @return
+     * @return option
      */
     String[] option() default {};
 }

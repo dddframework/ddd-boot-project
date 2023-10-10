@@ -25,6 +25,8 @@ public @interface CronJob {
 
     /**
      * 容错
+     * 参考 {@link org.quartz.CronTrigger}
+     * 参考 {@link org.quartz.Trigger}
      */
-    int misfireInstruction() default CronTrigger.MISFIRE_INSTRUCTION_FIRE_ONCE_NOW;
+    int misfireInstruction() default CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING;
 }

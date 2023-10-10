@@ -32,8 +32,8 @@ public class MinioService {
     /**
      * 判断存储桶是否存在
      *
-     * @param bucket
-     * @return
+     * @param bucket bucket
+     * @return boolean
      */
     public boolean bucketExists(String bucket) {
         try {
@@ -47,7 +47,8 @@ public class MinioService {
     /**
      * 创建存储桶
      *
-     * @param bucket
+     * @param bucket bucket
+     * @return  boolean
      */
     public boolean makeBucket(String bucket) {
         try {
@@ -65,7 +66,8 @@ public class MinioService {
     /**
      * 删除存储桶
      *
-     * @param bucket
+     * @param bucket bucket
+     * @return  boolean
      */
     public boolean removeBucket(String bucket) {
         try {
@@ -83,8 +85,9 @@ public class MinioService {
     /**
      * 文件上传 Base64模式
      *
-     * @param bucket
-     * @param name
+     * @param bucket bucket
+     * @param name name
+     * @return url
      */
     public String uploadBase64(String base64, String bucket, String name) {
         ByteArrayOutputStream out = null;
@@ -119,9 +122,10 @@ public class MinioService {
     /**
      * 文件上传 流模式
      *
-     * @param stream
-     * @param bucket
-     * @param name
+     * @param stream stream
+     * @param bucket bucket
+     * @param name name
+     * @return url
      */
     public String uploadStream(InputStream stream, String bucket, String name) {
         try {
@@ -157,9 +161,10 @@ public class MinioService {
      * 文件合并
      * 分片最小不能小于5M否则报错
      *
-     * @param sources
-     * @param bucket
-     * @param name
+     * @param sources sources
+     * @param bucket bucket
+     * @param name name
+     * @return url
      */
     public String mergeFile(List<ComposeSource> sources, String bucket, String name) {
         try {
@@ -179,9 +184,9 @@ public class MinioService {
     /**
      * 获取文件永久链接
      *
-     * @param bucketName
-     * @param objectName
-     * @return
+     * @param bucketName bucketName
+     * @param objectName objectName
+     * @return url
      */
     public String getFileUrl(String bucketName, String objectName) {
         String prefix = minioProperties.getUrl();
@@ -200,7 +205,7 @@ public class MinioService {
      * @param bucketName 桶名称
      * @param objectName 存储在文件服务器中的附件名称
      * @param expireTime 有效时间 单位是秒
-     * @return
+     * @return url
      */
     public String getFileShareUrl(String bucketName, String objectName, int expireTime) {
         try {
@@ -238,7 +243,7 @@ public class MinioService {
      *
      * @param bucketName 存储桶名称
      * @param objectName 存储桶里的对象名称
-     * @return
+     * @return StatObjectResponse
      */
     public StatObjectResponse statObject(String bucketName, String objectName) {
         boolean flag = bucketExists(bucketName);

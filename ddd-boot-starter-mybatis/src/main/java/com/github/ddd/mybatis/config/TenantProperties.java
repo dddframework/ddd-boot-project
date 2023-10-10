@@ -19,5 +19,5 @@ public class TenantProperties {
     /**
      * Schema 前缀
      */
-    private String prefix = "";
+    private String schemaPrefix = "";
 }

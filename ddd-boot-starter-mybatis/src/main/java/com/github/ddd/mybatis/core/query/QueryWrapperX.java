@@ -17,13 +17,6 @@ import java.util.Collection;
  */
 public class QueryWrapperX<T> extends QueryWrapper<T> {
 
-    /**
-     * LIKE
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> likeIfPresent(String column, String val) {
         if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.like(column, val);
@@ -31,13 +24,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * NOT LIKE
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> notLikeIfPresent(String column, String val) {
         if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.notLike(column, val);
@@ -45,13 +31,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 左LIKE
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> likeLeftIfPresent(String column, String val) {
         if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.likeLeft(column, val);
@@ -59,13 +38,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 右LIKE
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> likeRightIfPresent(String column, String val) {
         if (StrUtil.isNotBlank(val)) {
             return (QueryWrapperX<T>) super.likeRight(column, val);
@@ -73,13 +45,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * IN
-     *
-     * @param column
-     * @param values
-     * @return
-     */
     public QueryWrapperX<T> inIfPresent(String column, Collection<?> values) {
         if (!CollectionUtils.isEmpty(values)) {
             return (QueryWrapperX<T>) super.in(column, values);
@@ -87,13 +52,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * NOT IN
-     *
-     * @param column
-     * @param values
-     * @return
-     */
     public QueryWrapperX<T> notInIfPresent(String column, Collection<?> values) {
         if (!CollectionUtils.isEmpty(values)) {
             return (QueryWrapperX<T>) super.notIn(column, values);
@@ -101,13 +59,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * IN
-     *
-     * @param column
-     * @param values
-     * @return
-     */
     public QueryWrapperX<T> inIfPresent(String column, Object... values) {
         if (!ArrayUtils.isEmpty(values)) {
             return (QueryWrapperX<T>) super.in(column, values);
@@ -115,13 +66,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * NOT IN
-     *
-     * @param column
-     * @param values
-     * @return
-     */
     public QueryWrapperX<T> notInIfPresent(String column, Object... values) {
         if (!ArrayUtils.isEmpty(values)) {
             return (QueryWrapperX<T>) super.notIn(column, values);
@@ -129,13 +73,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 相等
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> eqIfPresent(String column, Object val) {
         if (val != null) {
             if (val instanceof String) {
@@ -150,13 +87,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 不等
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> neIfPresent(String column, Object val) {
         if (val != null) {
             return (QueryWrapperX<T>) super.ne(column, val);
@@ -164,13 +94,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 大于
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> gtIfPresent(String column, Object val) {
         if (val != null) {
             return (QueryWrapperX<T>) super.gt(column, val);
@@ -178,13 +101,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 大于等于
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> geIfPresent(String column, Object val) {
         if (val != null) {
             return (QueryWrapperX<T>) super.ge(column, val);
@@ -192,13 +108,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 小于
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> ltIfPresent(String column, Object val) {
         if (val != null) {
             return (QueryWrapperX<T>) super.lt(column, val);
@@ -206,13 +115,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * 小于等于
-     *
-     * @param column
-     * @param val
-     * @return
-     */
     public QueryWrapperX<T> leIfPresent(String column, Object val) {
         if (val != null) {
             return (QueryWrapperX<T>) super.le(column, val);
@@ -220,14 +122,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * BETWEEN
-     *
-     * @param column
-     * @param val1
-     * @param val2
-     * @return
-     */
     public QueryWrapperX<T> betweenIfPresent(String column, Object val1, Object val2) {
         if (val1 != null && val2 != null) {
             return (QueryWrapperX<T>) super.between(column, val1, val2);
@@ -241,14 +135,6 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
         return this;
     }
 
-    /**
-     * NOT BETWEEN
-     *
-     * @param column
-     * @param val1
-     * @param val2
-     * @return
-     */
     public QueryWrapperX<T> notBetweenIfPresent(String column, Object val1, Object val2) {
         if (val1 != null && val2 != null) {
             return (QueryWrapperX<T>) super.notBetween(column, val1, val2);
