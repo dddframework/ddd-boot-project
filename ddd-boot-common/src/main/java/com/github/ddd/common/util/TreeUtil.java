@@ -39,7 +39,7 @@ public class TreeUtil {
      * @param sort      是否排序
      * @param <T> T
      * @param <ID> ID
-     * @return
+     * @return List<Tree<ID>>
      */
     public static <T extends Tree<ID>, ID> List<Tree<ID>> buildTree(List<T> dataList, ID topId, boolean sort) {
         if (CollUtil.isEmpty(dataList)) {
