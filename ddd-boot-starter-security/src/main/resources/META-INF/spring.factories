@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.ddd.security.config.MvcConfig
+  com.github.ddd.security.spring.boot.autoconfigure.SecurityConfig

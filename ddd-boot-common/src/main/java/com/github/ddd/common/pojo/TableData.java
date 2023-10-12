@@ -3,6 +3,7 @@ package com.github.ddd.common.pojo;
 import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.function.Function;
  * @author ranger
  */
 @Data
-public class TableData<T> {
+public class TableData<T> implements Serializable {
     /**
      * 当前页
      */

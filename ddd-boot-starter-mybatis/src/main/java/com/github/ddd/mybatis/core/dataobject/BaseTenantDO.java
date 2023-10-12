@@ -3,6 +3,7 @@ package com.github.ddd.mybatis.core.dataobject;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -12,45 +13,14 @@ import java.io.Serializable;
  *
  * @author ranger
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseTenantDO implements Serializable {
+public class BaseTenantDO extends BaseAuditDO implements Serializable {
     /**
      * 租户id
      */
     @TableField(fill = FieldFill.INSERT)
     private Long tenantId;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Long createTime;
-    /**
-     * 创建者id
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Long creatorId;
-
-    /**
-     * 创建者姓名
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private String creatorName;
-    /**
-     * 更新者id
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updaterId;
-    /**
-     * 更新者姓名
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String updaterName;
-    /**
-     * 最后更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateTime;
 
 
 }

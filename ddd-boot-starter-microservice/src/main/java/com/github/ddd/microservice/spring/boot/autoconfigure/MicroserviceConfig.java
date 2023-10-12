@@ -1,4 +1,4 @@
-package com.github.ddd.microservice.config;
+package com.github.ddd.microservice.spring.boot.autoconfigure;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author 研发中心-ranger
+ * @author ranger
  */
 @Configuration
-public class MvcConfig {
+public class MicroserviceConfig {
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate() {

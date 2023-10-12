@@ -1,7 +1,8 @@
-package com.github.ddd.security.pojo;
+package com.github.ddd.common.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Set;
  * @author ranger
  */
 @Data
-public class UserDetail {
+public class UserDetail implements Serializable {
 
     /**
      * 用户ID

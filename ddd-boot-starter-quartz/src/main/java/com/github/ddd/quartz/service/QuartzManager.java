@@ -12,7 +12,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import java.util.*;
 
 /**
- * @author 研发中心-ranger
+ * @author ranger
  */
 @Slf4j
 @RequiredArgsConstructor

@@ -93,7 +93,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ClientAbortException.class)
     @ResponseBody
     public void handlerClientAbortException(HttpServletRequest request, ClientAbortException e) {
-        log.warn("请求路径 {}, 客户端主动断开异常 {}", request.getRequestURI(), e.getMessage());
+        log.warn("请求路径 {}, 客户端主动断开 {}", request.getRequestURI(), e.getMessage());
     }
 
     @ExceptionHandler(NullPointerException.class)

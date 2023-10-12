@@ -1,9 +1,9 @@
 package com.github.ddd.security.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.ddd.security.core.SecurityService;
-import com.github.ddd.security.pojo.UserDetail;
-import com.github.ddd.security.util.UserContextHolder;
+import com.github.ddd.common.pojo.UserDetail;
+import com.github.ddd.common.util.UserContextHolder;
+import com.github.ddd.security.core.SessionManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,11 +22,12 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class UserContextFilter extends OncePerRequestFilter {
 
-    private final SecurityService securityService;
+    private final SessionManager sessionManager;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        UserDetail currentUser = parseUserHeader(request);
+        String sessionId = request.getHeader(HttpHeaders.AUTHORIZATION);
+        UserDetail currentUser = parseUserHeader(sessionId);
         if (currentUser != null) {
             UserContextHolder.setUserContext(currentUser);
         }
@@ -36,15 +37,14 @@ public class UserContextFilter extends OncePerRequestFilter {
     /**
      * 解析UserDetail
      *
-     * @param request
+     * @param sessionId
      * @return UserDetail
      */
-    public UserDetail parseUserHeader(HttpServletRequest request) {
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (StrUtil.isBlank(token)) {
+    public UserDetail parseUserHeader(String sessionId) {
+        if (StrUtil.isBlank(sessionId)) {
             return null;
         }
-        return securityService.parseToken(token);
+        return sessionManager.getUserDetailBySessionId(sessionId);
     }
 
 }

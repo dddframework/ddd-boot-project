@@ -1,6 +1,6 @@
-package com.github.ddd.security.util;
+package com.github.ddd.common.util;
 
-import com.github.ddd.security.pojo.UserDetail;
+import com.github.ddd.common.pojo.UserDetail;
 
 /**
  * 用户信息工具类

@@ -1,12 +1,13 @@
-package com.github.ddd.security.config;
+package com.github.ddd.security.spring.boot.autoconfigure;
 
 import cn.hutool.core.collection.CollUtil;
-import com.github.ddd.security.core.SecurityService;
+import cn.hutool.extra.spring.EnableSpringUtil;
 import com.github.ddd.security.core.SessionManager;
 import com.github.ddd.security.filter.PermissionInterceptor;
 import com.github.ddd.security.filter.UserContextFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -24,29 +25,29 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Configuration
-@EnableCaching
 @EnableWebMvc
+@EnableCaching
+@EnableSpringUtil
+@ConditionalOnClass(CacheManager.class)
 @EnableConfigurationProperties(SecurityProperties.class)
-public class MvcConfig implements WebMvcConfigurer {
+public class SecurityConfig implements WebMvcConfigurer {
 
     private final SecurityProperties securityProperties;
 
+
     @Bean
-    public SessionManager securityService(CacheManager sessionManager) {
-        return new SessionManager(sessionManager, securityProperties);
+    @ConditionalOnMissingBean
+    public SessionManager sessionManager(CacheManager cacheManager) {
+        return new SessionManager(cacheManager, securityProperties);
     }
 
     @Bean
-    public SecurityService securityService(SessionManager sessionManager) {
-        return new SecurityService(sessionManager, securityProperties);
+    public UserContextFilter userContextFilter(SessionManager sessionManager) {
+        return new UserContextFilter(sessionManager);
     }
 
     @Bean
-    public UserContextFilter userContextFilter(SecurityService securityService) {
-        return new UserContextFilter(securityService);
-    }
-
-    @Bean
+    @ConditionalOnMissingBean
     public PermissionInterceptor permissionInterceptor() {
         return new PermissionInterceptor();
     }

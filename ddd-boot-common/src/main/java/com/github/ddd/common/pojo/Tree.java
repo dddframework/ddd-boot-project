@@ -3,7 +3,7 @@ package com.github.ddd.common.pojo;
 import java.util.List;
 
 /**
- * @author 研发中心-ranger
+ * @author ranger
  */
 public interface Tree<ID> {
     /**

@@ -1,4 +1,4 @@
-package com.github.ddd.minio.config;
+package com.github.ddd.minio.spring.boot.autoconfigure;
 
 
 import com.github.ddd.minio.core.MinioService;

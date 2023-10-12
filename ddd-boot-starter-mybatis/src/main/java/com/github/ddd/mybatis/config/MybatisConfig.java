@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.github.ddd.mybatis.core.handler.DefaultDbFieldHandler;
 import com.github.ddd.mybatis.exception.DaoExceptionHandler;
-import com.github.ddd.security.util.UserContextHolder;
+import com.github.ddd.common.util.UserContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.github.ddd.security.config;
+package com.github.ddd.security.spring.boot.autoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,9 +16,9 @@ public class SecurityProperties {
      */
     private List<String> whiteList;
     /**
-     * 会话保持时间 单位小时
+     * 会话保持时间 单位秒
      */
-    private Long sessionTime = 12L;
+    private Integer sessionTime = 1800;
     /**
      * 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
      */
@@ -26,5 +26,5 @@ public class SecurityProperties {
     /**
      * 缓存前缀
      */
-    public String sessionPrefix = "ddd.sessions.";
+    public String sessionPrefix = "ddd:sessions";
 }

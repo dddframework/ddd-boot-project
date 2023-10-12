@@ -1,4 +1,4 @@
-package com.github.ddd.minio.config;
+package com.github.ddd.minio.spring.boot.autoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

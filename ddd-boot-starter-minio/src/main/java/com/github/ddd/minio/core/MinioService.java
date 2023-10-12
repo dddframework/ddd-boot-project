@@ -3,7 +3,7 @@ package com.github.ddd.minio.core;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.github.ddd.minio.config.MinioProperties;
+import com.github.ddd.minio.spring.boot.autoconfigure.MinioProperties;
 import io.minio.*;
 import io.minio.http.Method;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,14 @@
 package com.github.ddd.mybatis.core.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.github.ddd.common.pojo.UserDetail;
+import com.github.ddd.common.util.UserContextHolder;
 import com.github.ddd.mybatis.core.dataobject.BaseDO;
 import com.github.ddd.mybatis.core.dataobject.BaseTenantDO;
-import com.github.ddd.security.pojo.UserDetail;
-import com.github.ddd.security.util.UserContextHolder;
+import com.github.ddd.mybatis.core.dataobject.BaseAuditDO;
 import org.apache.ibatis.reflection.MetaObject;
+
+import java.util.Date;
 
 /**
  * 通用参数填充实现类
@@ -23,52 +26,40 @@ public class DefaultDbFieldHandler implements MetaObjectHandler {
         if (metaObject == null) {
             return;
         }
-        if (metaObject.getOriginalObject() instanceof BaseDO) {
-            BaseDO baseDO = (BaseDO) metaObject.getOriginalObject();
-            UserDetail user = UserContextHolder.getCurrentUser();
-            if (user != null) {
-                Long userId = user.getUserId();
-                String nickname = user.getNickname();
-                baseDO.setCreatorId(userId);
-                baseDO.setCreatorName(nickname);
-                baseDO.setUpdaterId(userId);
-                baseDO.setUpdaterName(nickname);
-            } else {
-                baseDO.setCreatorId(NOT_LOGIN_ID);
-                baseDO.setCreatorName(NOT_LOGIN_NAME);
-                baseDO.setUpdaterId(NOT_LOGIN_ID);
-                baseDO.setUpdaterName(NOT_LOGIN_NAME);
-            }
+        Date date = new Date();
+        Object originalObject = metaObject.getOriginalObject();
+        if (originalObject instanceof BaseDO) {
+            BaseDO baseDO = (BaseDO) originalObject;
             if (baseDO.getCreateTime() == null) {
-                baseDO.setCreateTime(System.currentTimeMillis());
+                baseDO.setCreateTime(date);
             }
             if (baseDO.getUpdateTime() == null) {
-                baseDO.setUpdateTime(System.currentTimeMillis());
+                baseDO.setUpdateTime(date);
             }
         }
-        if (metaObject.getOriginalObject() instanceof BaseTenantDO) {
-            BaseTenantDO baseTenantDO = (BaseTenantDO) metaObject.getOriginalObject();
+        if (originalObject instanceof BaseAuditDO) {
+            BaseAuditDO baseAuditDO = (BaseAuditDO) originalObject;
             UserDetail user = UserContextHolder.getCurrentUser();
             if (user != null) {
                 Long userId = user.getUserId();
                 String nickname = user.getNickname();
-                Long tenantId = user.getTenantId();
-                baseTenantDO.setCreatorId(userId);
-                baseTenantDO.setCreatorName(nickname);
-                baseTenantDO.setUpdaterId(userId);
-                baseTenantDO.setUpdaterName(nickname);
-                baseTenantDO.setTenantId(tenantId);
+                baseAuditDO.setCreatorId(userId);
+                baseAuditDO.setCreatorName(nickname);
+                baseAuditDO.setUpdaterId(userId);
+                baseAuditDO.setUpdaterName(nickname);
             } else {
-                baseTenantDO.setCreatorId(NOT_LOGIN_ID);
-                baseTenantDO.setCreatorName(NOT_LOGIN_NAME);
-                baseTenantDO.setUpdaterId(NOT_LOGIN_ID);
-                baseTenantDO.setUpdaterName(NOT_LOGIN_NAME);
+                baseAuditDO.setCreatorId(NOT_LOGIN_ID);
+                baseAuditDO.setCreatorName(NOT_LOGIN_NAME);
+                baseAuditDO.setUpdaterId(NOT_LOGIN_ID);
+                baseAuditDO.setUpdaterName(NOT_LOGIN_NAME);
             }
-            if (baseTenantDO.getCreateTime() == null) {
-                baseTenantDO.setCreateTime(System.currentTimeMillis());
-            }
-            if (baseTenantDO.getUpdateTime() == null) {
-                baseTenantDO.setUpdateTime(System.currentTimeMillis());
+        }
+        if (originalObject instanceof BaseTenantDO) {
+            BaseTenantDO baseTenantDO = (BaseTenantDO) originalObject;
+            UserDetail user = UserContextHolder.getCurrentUser();
+            if (user != null) {
+                Long tenantId = user.getTenantId();
+                baseTenantDO.setTenantId(tenantId);
             }
         }
     }
@@ -78,27 +69,24 @@ public class DefaultDbFieldHandler implements MetaObjectHandler {
         if (metaObject == null) {
             return;
         }
+        Date date = new Date();
         UserDetail user = UserContextHolder.getCurrentUser();
-        if (metaObject.getOriginalObject() instanceof BaseDO) {
-            BaseDO baseDO = (BaseDO) metaObject.getOriginalObject();
+        Object originalObject = metaObject.getOriginalObject();
+        if (originalObject instanceof BaseDO) {
+            BaseDO baseDO = (BaseDO) originalObject;
+            if (baseDO.getUpdateTime() == null) {
+                baseDO.setUpdateTime(date);
+            }
+        }
+        if (originalObject instanceof BaseAuditDO) {
+            BaseAuditDO baseAuditDO = (BaseAuditDO) originalObject;
             if (user != null) {
                 Long userId = user.getUserId();
                 String nickname = user.getNickname();
-                baseDO.setUpdaterId(userId);
-                baseDO.setUpdaterName(nickname);
+                baseAuditDO.setUpdaterId(userId);
+                baseAuditDO.setUpdaterName(nickname);
             }
-            baseDO.setUpdateTime(System.currentTimeMillis());
         }
-        if (metaObject.getOriginalObject() instanceof BaseTenantDO) {
-            BaseTenantDO baseDO = (BaseTenantDO) metaObject.getOriginalObject();
-            if (user != null) {
-                Long userId = user.getUserId();
-                String nickname = user.getNickname();
-                baseDO.setUpdaterId(userId);
-                baseDO.setUpdaterName(nickname);
-            }
-            baseDO.setUpdateTime(System.currentTimeMillis());
-        }
-
     }
+
 }

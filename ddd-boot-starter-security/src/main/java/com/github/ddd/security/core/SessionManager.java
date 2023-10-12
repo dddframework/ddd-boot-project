@@ -1,54 +1,79 @@
 package com.github.ddd.security.core;
 
-import com.github.ddd.common.util.JacksonUtil;
-import com.github.ddd.security.config.SecurityProperties;
+import com.github.ddd.common.pojo.UserDetail;
+import com.github.ddd.security.spring.boot.autoconfigure.SecurityProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-
-import java.util.concurrent.TimeUnit;
+import org.springframework.util.Assert;
 
 /**
- * @author 研发中心-ranger
+ * @author ranger
  */
+@Slf4j
 public class SessionManager {
 
-    private final CacheManager cacheManager;
     private final SecurityProperties securityProperties;
-
     protected Cache cache;
 
+    private static final String DEFAULT_CLIENT = "default";
+
     public SessionManager(CacheManager cacheManager, SecurityProperties securityProperties) {
-        this.cacheManager = cacheManager;
         this.securityProperties = securityProperties;
         this.cache = cacheManager.getCache(securityProperties.getSessionPrefix());
     }
 
-    public void put(String key, Object o, long duration, TimeUnit timeUnit) {
-        cache.put(key, JacksonUtil.toJsonStr(o));
-        cache.put(key + ".expires", System.currentTimeMillis() + timeUnit.toMillis(duration));
+    public Session createSession(UserDetail userDetail) {
+        Assert.notNull(userDetail, "userDetail is not null");
+        String userId = userDetail.getUserId().toString();
+        String clientId = userDetail.getClientId() == null ? DEFAULT_CLIENT : userDetail.getClientId();
+
+        Session session = new Session(userId, clientId, this.securityProperties.getSessionTime());
+        cache.put(session.getId(), session);
+        cache.put(userId + ":" + clientId, userDetail);
+        return session;
     }
 
-    public void put(String key, Object o) {
-        cache.put(key, JacksonUtil.toJsonStr(o));
+    public void saveSession(Session session) {
+        cache.put(session.getId(), session);
     }
 
-    public void remove(String key) {
-        cache.evict(key);
+    public void updateUserDetail(UserDetail userDetail) {
+        Long userId = userDetail.getUserId();
+        String clientId = userDetail.getClientId() == null ? DEFAULT_CLIENT : userDetail.getClientId();
+        cache.put(userId + ":" + clientId, userDetail);
     }
 
-    public String get(String key) {
-        Cache.ValueWrapper wrapper = cache.get(key);
-        if (wrapper != null) {
-            Object o = wrapper.get();
-            if (o != null) {
-                return o.toString();
+
+    public Session getSessionById(String sessionId) {
+        Session session = cache.get(sessionId, Session.class);
+        if (session == null) {
+            return null;
+        }
+        if (session.isExpired()) {
+            removeSession(sessionId);
+            return null;
+        }
+        session.renewal();
+        saveSession(session);
+        return session;
+    }
+
+    public void removeSession(String sessionId) {
+        cache.evict(sessionId);
+    }
+
+    public UserDetail getUserDetailBySessionId(String sessionId) {
+        Session session = getSessionById(sessionId);
+        if (session != null) {
+            String userId = session.getUserId();
+            String clientId = session.getClientId();
+            UserDetail userDetail = cache.get(userId + ":" + clientId, UserDetail.class);
+            if (userDetail == null) {
+                removeSession(sessionId);
             }
+            return userDetail;
         }
         return null;
-    }
-
-    public void expire(String key, long duration, TimeUnit timeUnit) {
-        cache.put(key, cache.get(key));
-        cache.put(key + ".expires", System.currentTimeMillis() + timeUnit.toMillis(duration));
     }
 }
