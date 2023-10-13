@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 用户上下拦截
+ * 用户上下文注入
  *
  * @author ranger
  */
@@ -37,8 +37,8 @@ public class UserContextFilter extends OncePerRequestFilter {
     /**
      * 解析UserDetail
      *
-     * @param sessionId
-     * @return UserDetail
+     * @param sessionId sessionId
+     * @return UserDetail UserDetail
      */
     public UserDetail parseUserHeader(String sessionId) {
         if (StrUtil.isBlank(sessionId)) {

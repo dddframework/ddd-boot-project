@@ -36,7 +36,11 @@ public class UserContextHolder {
      * @return UserId
      */
     public static Long getUserId() {
-        return USER_CONTEXT.get().getUserId();
+        UserDetail userDetail = USER_CONTEXT.get();
+        if (userDetail == null) {
+            return null;
+        }
+        return userDetail.getUserId();
     }
 
     /**
@@ -45,7 +49,11 @@ public class UserContextHolder {
      * @return Nickname
      */
     public static String getNickname() {
-        return USER_CONTEXT.get().getNickname();
+        UserDetail userDetail = USER_CONTEXT.get();
+        if (userDetail == null) {
+            return null;
+        }
+        return userDetail.getNickname();
     }
 
 
@@ -55,6 +63,10 @@ public class UserContextHolder {
      * @return TenantId
      */
     public static Long getTenantId() {
-        return USER_CONTEXT.get().getTenantId();
+        UserDetail userDetail = USER_CONTEXT.get();
+        if (userDetail == null) {
+            return null;
+        }
+        return userDetail.getTenantId();
     }
 }

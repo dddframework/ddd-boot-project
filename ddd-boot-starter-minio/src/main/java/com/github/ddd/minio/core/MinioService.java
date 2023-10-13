@@ -48,7 +48,7 @@ public class MinioService {
      * 创建存储桶
      *
      * @param bucket bucket
-     * @return  boolean
+     * @return boolean
      */
     public boolean makeBucket(String bucket) {
         try {
@@ -67,7 +67,7 @@ public class MinioService {
      * 删除存储桶
      *
      * @param bucket bucket
-     * @return  boolean
+     * @return boolean
      */
     public boolean removeBucket(String bucket) {
         try {
@@ -86,7 +86,7 @@ public class MinioService {
      * 文件上传 Base64模式
      *
      * @param bucket bucket
-     * @param name name
+     * @param name   name
      * @return url
      */
     public String uploadBase64(String base64, String bucket, String name) {
@@ -124,7 +124,7 @@ public class MinioService {
      *
      * @param stream stream
      * @param bucket bucket
-     * @param name name
+     * @param name   name
      * @return url
      */
     public String uploadStream(InputStream stream, String bucket, String name) {
@@ -162,8 +162,8 @@ public class MinioService {
      * 分片最小不能小于5M否则报错
      *
      * @param sources sources
-     * @param bucket bucket
-     * @param name name
+     * @param bucket  bucket
+     * @param name    name
      * @return url
      */
     public String mergeFile(List<ComposeSource> sources, String bucket, String name) {

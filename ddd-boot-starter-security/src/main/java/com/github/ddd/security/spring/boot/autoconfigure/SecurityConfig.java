@@ -1,7 +1,6 @@
 package com.github.ddd.security.spring.boot.autoconfigure;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.extra.spring.EnableSpringUtil;
 import com.github.ddd.security.core.SessionManager;
 import com.github.ddd.security.filter.PermissionInterceptor;
 import com.github.ddd.security.filter.UserContextFilter;
@@ -27,7 +26,6 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @EnableCaching
-@EnableSpringUtil
 @ConditionalOnClass(CacheManager.class)
 @EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityConfig implements WebMvcConfigurer {
@@ -36,7 +34,6 @@ public class SecurityConfig implements WebMvcConfigurer {
 
 
     @Bean
-    @ConditionalOnMissingBean
     public SessionManager sessionManager(CacheManager cacheManager) {
         return new SessionManager(cacheManager, securityProperties);
     }

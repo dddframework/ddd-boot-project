@@ -22,7 +22,7 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
     /**
      * 分页查询
      *
-     * @param pageParam pageParam
+     * @param pageParam    pageParam
      * @param queryWrapper queryWrapper
      * @return TableData
      */

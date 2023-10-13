@@ -1,9 +1,19 @@
-package com.xiaoju.uemc.tinyid.base.entity;
+package com.github.ddd.tinyid.core;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author du_imba
  */
-public class ResultCode {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Result {
+    private int code;
+    private long id;
+
 
     /**
      * 正常可用
@@ -17,8 +27,4 @@ public class ResultCode {
      * 超过maxId 不可用
      */
     public static final int OVER = 3;
-
-    private ResultCode() {
-
-    }
 }

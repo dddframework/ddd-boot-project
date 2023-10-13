@@ -21,10 +21,10 @@ public class ParallelCalcTask<T, R> {
     /**
      * Future池
      */
-    private List<Future<R>> todoTask = new ArrayList<>();
+    protected List<Future<R>> todoTask = new ArrayList<>();
 
     /**
-     * 使用的线程池
+     * 使用的线程池 不指定使用默认线程池
      */
     private ThreadPoolExecutor threadPool;
 

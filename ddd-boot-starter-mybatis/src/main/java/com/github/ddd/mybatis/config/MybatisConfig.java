@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.github.ddd.common.util.UserContextHolder;
 import com.github.ddd.mybatis.core.handler.DefaultDbFieldHandler;
 import com.github.ddd.mybatis.exception.DaoExceptionHandler;
-import com.github.ddd.common.util.UserContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +36,7 @@ public class MybatisConfig {
         // 启用多租户模式
         if (tenantProperties.isEnable()) {
             String prefix = tenantProperties.getSchemaPrefix();
-            if (StrUtil.isBlank(prefix)){
+            if (StrUtil.isBlank(prefix)) {
                 throw new RuntimeException("多租户模式 前缀不能为空");
             }
             DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();

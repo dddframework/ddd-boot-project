@@ -3,9 +3,9 @@ package com.github.ddd.mybatis.core.handler;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.github.ddd.common.pojo.UserDetail;
 import com.github.ddd.common.util.UserContextHolder;
+import com.github.ddd.mybatis.core.dataobject.BaseAuditDO;
 import com.github.ddd.mybatis.core.dataobject.BaseDO;
 import com.github.ddd.mybatis.core.dataobject.BaseTenantDO;
-import com.github.ddd.mybatis.core.dataobject.BaseAuditDO;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;

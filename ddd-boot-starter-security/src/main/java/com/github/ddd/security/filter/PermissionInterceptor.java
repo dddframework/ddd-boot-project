@@ -2,13 +2,14 @@ package com.github.ddd.security.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.github.ddd.common.pojo.ServerResponse;
-import com.github.ddd.security.annotation.CheckPermission;
-import com.github.ddd.security.annotation.NotLogin;
 import com.github.ddd.common.pojo.UserDetail;
 import com.github.ddd.common.util.UserContextHolder;
+import com.github.ddd.security.annotation.CheckPermission;
+import com.github.ddd.security.annotation.NotLogin;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -27,7 +28,7 @@ import java.util.Set;
 public class PermissionInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
@@ -76,10 +77,11 @@ public class PermissionInterceptor implements HandlerInterceptor {
     /**
      * 输出错误信息
      *
-     * @param response
-     * @throws IOException
+     * @param response response
+     * @throws IOException IOException
      */
-    private void outputError(HttpServletResponse response, HttpStatus httpStatus) throws IOException {
+    private void outputError(@Nullable HttpServletResponse response, HttpStatus httpStatus) throws IOException {
+        assert response != null;
         response.reset();
         response.setStatus(httpStatus.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

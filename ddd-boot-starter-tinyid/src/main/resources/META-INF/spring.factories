@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.xiaoju.uemc.tinyid.client.config.TinyIdClientConfig
+  com.github.ddd.tinyid.spring.boot.autoconfigure.TinyIdConfig

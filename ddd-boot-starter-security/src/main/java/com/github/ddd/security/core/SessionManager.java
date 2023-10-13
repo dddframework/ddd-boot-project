@@ -21,6 +21,8 @@ public class SessionManager {
     public SessionManager(CacheManager cacheManager, SecurityProperties securityProperties) {
         this.securityProperties = securityProperties;
         this.cache = cacheManager.getCache(securityProperties.getSessionPrefix());
+        assert this.cache != null;
+        log.info("session cache use {}", this.cache.getClass().getName());
     }
 
     public Session createSession(UserDetail userDetail) {

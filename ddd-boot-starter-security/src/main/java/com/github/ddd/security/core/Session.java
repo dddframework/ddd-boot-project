@@ -43,6 +43,9 @@ public class Session implements Serializable {
         this.userId = userId;
         this.clientId = clientId;
         this.sessionTime = sessionTime;
+        this.creationTime = System.currentTimeMillis();
+        this.lastAccessedTime = this.creationTime;
+        this.expiresTime = this.lastAccessedTime + this.sessionTime * 1000;
     }
 
     /**

@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 /**
  * 树工具
+ *
  * @author ranger
  */
 @Slf4j
@@ -20,10 +21,11 @@ public class TreeUtil {
 
     /**
      * 递归处理
-     * @param tree tree
+     *
+     * @param tree     tree
      * @param pTreeMap pTreeMap
-     * @param deep deep
-     * @param <ID> ID
+     * @param deep     deep
+     * @param <ID>     ID
      */
     private static <ID> void buildTree(Tree<ID> tree, Map<ID, List<Tree<ID>>> pTreeMap, int deep) {
         ID id = tree.id();
@@ -42,12 +44,13 @@ public class TreeUtil {
 
     /**
      * 构建树
-     * @param dataList  数据集
-     * @param topId     顶级节点
-     * @param sort      是否排序
-     * @param <T> T
-     * @param <ID> ID
-     * @return List<Tree<ID>>
+     *
+     * @param dataList 数据集
+     * @param topId    顶级节点
+     * @param sort     是否排序
+     * @param <T>      T
+     * @param <ID>     ID
+     * @return List<Tree < ID>>
      */
     public static <T extends Tree<ID>, ID> List<Tree<ID>> buildTree(List<T> dataList, ID topId, boolean sort) {
         if (CollUtil.isEmpty(dataList)) {
@@ -86,6 +89,7 @@ public class TreeUtil {
 
     /**
      * 排序树
+     *
      * @param tree tree
      * @param <ID> ID
      */
@@ -101,9 +105,10 @@ public class TreeUtil {
 
     /**
      * 打印树
-     * @param tree tree
+     *
+     * @param tree  tree
      * @param level level
-     * @param <ID> ID
+     * @param <ID>  ID
      */
     public static <ID> void printTree(Tree<ID> tree, int level) {
         System.out.print(StrUtil.repeat(" ", level));
@@ -118,9 +123,10 @@ public class TreeUtil {
 
     /**
      * 遍历树
-     * @param tree tree
+     *
+     * @param tree     tree
      * @param consumer consumer
-     * @param <ID> ID
+     * @param <ID>     ID
      */
     public static <ID> void walk(Tree<ID> tree, Consumer<Tree<ID>> consumer) {
         consumer.accept(tree);
@@ -134,9 +140,10 @@ public class TreeUtil {
 
     /**
      * 扁平化树
-     * @param tree tree
+     *
+     * @param tree   tree
      * @param result result
-     * @param <ID> ID
+     * @param <ID>   ID
      */
     public static <ID> void flatTree(Tree<ID> tree, List<Tree<ID>> result) {
         result.add(tree);
