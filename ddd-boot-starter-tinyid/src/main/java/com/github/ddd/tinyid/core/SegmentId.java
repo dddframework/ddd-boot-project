@@ -52,7 +52,7 @@ public class SegmentId {
             }
         }
         if (!init) {
-            log.info("SegmentId init error id {} delta {} remainder {}", id, delta, remainder);
+            log.debug("SegmentId init error id {} delta {} remainder {}", id, delta, remainder);
             throw new SystemException("SegmentId init error");
         }
     }
@@ -61,7 +61,7 @@ public class SegmentId {
         init();
         long id = currentId.addAndGet(delta);
         if (id > maxId) {
-            log.info("超过maxId 不可用 SegmentId id {} maxId {}", id, maxId);
+            log.debug("超过maxId 不可用 SegmentId id {} maxId {}", id, maxId);
             return new Result(Result.OVER, id);
         }
         if (id >= loadingId) {
