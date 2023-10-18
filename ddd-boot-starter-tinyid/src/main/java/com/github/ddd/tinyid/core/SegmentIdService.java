@@ -66,7 +66,7 @@ public class SegmentIdService {
     public void updateMaxId(Long newMaxId, Long oldMaxId, String bizType) {
         int update = jdbcTemplate.update(UPDATE_TINY_ID, newMaxId, System.currentTimeMillis(), oldMaxId, bizType);
         if (update > 0) {
-            log.info("updateMaxId success bizType {} newMaxId {}", bizType, newMaxId);
+            log.debug("updateMaxId success bizType {} newMaxId {}", bizType, newMaxId);
         }
     }
 

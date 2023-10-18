@@ -24,11 +24,6 @@ public class ParallelCalcTask<T, R> {
     protected List<Future<R>> todoTask = new ArrayList<>();
 
     /**
-     * 使用的线程池 不指定使用默认线程池
-     */
-    private ThreadPoolExecutor threadPool;
-
-    /**
      * 需要处理的方法
      */
     private Function<T, R> function;
@@ -39,16 +34,23 @@ public class ParallelCalcTask<T, R> {
     private List<T> params;
 
     /**
+     * 使用的线程池
+     */
+    private final static ThreadPoolExecutor THREAD_POOL;
+
+    static {
+        int availableProcessors = Runtime.getRuntime().availableProcessors();
+        THREAD_POOL = new ThreadPoolExecutor(availableProcessors, availableProcessors, 60L, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(1000), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+
+    }
+
+    /**
      * 投递任务
      */
-    private synchronized void deliveryTask() {
-        if (threadPool == null) {
-            int availableProcessors = Runtime.getRuntime().availableProcessors();
-            threadPool = new ThreadPoolExecutor(availableProcessors, availableProcessors, 60L, TimeUnit.SECONDS,
-                    new ArrayBlockingQueue<>(1000), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
-        }
+    private void deliveryTask() {
         for (T param : params) {
-            Future<R> future = threadPool.submit(() -> function.apply(param));
+            Future<R> future = THREAD_POOL.submit(() -> function.apply(param));
             todoTask.add(future);
         }
     }

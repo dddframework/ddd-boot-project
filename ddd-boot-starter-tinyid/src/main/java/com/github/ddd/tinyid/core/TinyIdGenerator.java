@@ -27,7 +27,7 @@ public class TinyIdGenerator {
 
         @Override
         public Thread newThread(@NonNull Runnable r) {
-            return new Thread(r, "TinyIdGenerator-Thread-" + threadNumber.getAndIncrement());
+            return new Thread(r, "tiny-id-" + threadNumber.getAndIncrement());
         }
     });
 
@@ -41,7 +41,7 @@ public class TinyIdGenerator {
     public synchronized void loadCurrent() {
         if (current == null || !current.useful()) {
             if (next == null) {
-                log.info("loadCurrent bizType {}", bizType);
+                log.debug("loadCurrent bizType {}", bizType);
                 current = segmentIdService.getNextSegmentId(bizType);
             } else {
                 current = next;
@@ -58,7 +58,7 @@ public class TinyIdGenerator {
                     isLoadingNext = true;
                     THREAD_POOL.submit(() -> {
                         try {
-                            log.info("loadNext SegmentId bizType {}", bizType);
+                            log.debug("loadNext SegmentId bizType {}", bizType);
                             // 无论获取下个segmentId成功与否，都要将isLoadingNext赋值为false
                             next = segmentIdService.getNextSegmentId(bizType);
                         } finally {
