@@ -1,6 +1,7 @@
 package com.github.ddd.web.spring.boot.autoconfigure;
 
 import com.github.ddd.web.exception.GlobalExceptionHandler;
+import com.github.ddd.web.file.LocalFileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/f/**")
                 .addResourceLocations("file:" + localFileConfig.getRoot())
                 .setCacheControl(CacheControl.maxAge(24, TimeUnit.HOURS).cachePublic());
+    }
+
+    /**
+     * 本地文件存储
+     */
+    @Bean
+    public LocalFileStorageService localFileStorageService() {
+        return new LocalFileStorageService(localFileConfig);
     }
 
     /**
