@@ -5,6 +5,7 @@ import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -15,6 +16,9 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 public class XxlJobConfig {
+
+    @Value("${xxl.job.enable:true}")
+    private Boolean enable;
 
     @Value("${xxl.job.admin.addresses}")
     private String adminAddresses;
@@ -30,8 +34,13 @@ public class XxlJobConfig {
 
 
     @Bean
+    @Conditional(XxlCondition.class)
     public XxlJobSpringExecutor xxlJobExecutor() {
-        log.info(">>>>>>>>>>> xxl-job config init.");
+        if (enable) {
+            log.info("xxl-job 配置初始化。。。。。。。。。。。。。。。。。");
+        } else {
+            log.warn("xxl-job 未启用。。。。。。。。。。。。。。。。。。。");
+        }
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
         xxlJobSpringExecutor.setAdminAddresses(adminAddresses);
         xxlJobSpringExecutor.setAppname(appname);

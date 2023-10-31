@@ -29,9 +29,9 @@ public class TreeUtil {
      */
     private static <ID> void buildTree(Tree<ID> tree, Map<ID, List<Tree<ID>>> pTreeMap, int deep) {
         ID id = tree.id();
-        log.debug("当前物料 {} 递归深度 {}", id, deep);
+        log.debug("当前节点 {} 递归深度 {}", id, deep);
         if (deep > MAX_DEEP) {
-            throw new SystemException("数据不合法，超出最大递归深度" + MAX_DEEP + " 该标识是" + id);
+            throw new SystemException("数据不合法，超出最大递归深度" + MAX_DEEP + " 该节点标识是" + id);
         }
         List<Tree<ID>> childrenTree = pTreeMap.get(id);
         if (childrenTree != null) {

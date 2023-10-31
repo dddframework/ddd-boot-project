@@ -1,4 +1,4 @@
-package com.github.ddd.mybatis.config;
+package com.github.ddd.tinyid.spring.boot.autoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -20,4 +20,8 @@ public class TenantProperties {
      * Schema 前缀
      */
     private String schemaPrefix = "";
+    /**
+     * TinyId 数据表名
+     */
+    private String tinyIdTable = "tiny_id";
 }

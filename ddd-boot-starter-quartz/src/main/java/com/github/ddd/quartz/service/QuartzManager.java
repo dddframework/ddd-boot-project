@@ -9,7 +9,9 @@ import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author ranger
@@ -160,13 +162,6 @@ public class QuartzManager {
 
     public List<Job> list() {
         try {
-            Map<String, String> map = new HashMap<>();
-            map.put("BLOCKED", "阻塞");
-            map.put("COMPLETE", "完成");
-            map.put("ERROR", "出错");
-            map.put("NONE", "不存在");
-            map.put("NORMAL", "正常");
-            map.put("PAUSED", "暂停");
             List<Job> list = new ArrayList<>();
             for (String groupName : scheduler.getJobGroupNames()) {
                 for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
@@ -184,7 +179,7 @@ public class QuartzManager {
                         }
                         item.setMisfireInstruction(trigger.getMisfireInstruction());
                         String state = scheduler.getTriggerState(trigger.getKey()).name();
-                        item.setState(map.get(state));
+                        item.setState(state);
                         list.add(item);
                     }
                 }
@@ -208,4 +203,5 @@ public class QuartzManager {
         private boolean disallowConcurrentExecution;
         private String state;
     }
+
 }

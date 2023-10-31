@@ -1,7 +1,6 @@
 package com.github.ddd.quartz.annotation;
 
 import com.github.ddd.quartz.CronJobRegistrar;
-import com.github.ddd.quartz.SchedulerFactoryBeanCustomizerImpl;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -14,7 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@Import({CronJobRegistrar.class, SchedulerFactoryBeanCustomizerImpl.class})
+@Import({CronJobRegistrar.class})
 public @interface EnableCronJob {
     /**
      * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation

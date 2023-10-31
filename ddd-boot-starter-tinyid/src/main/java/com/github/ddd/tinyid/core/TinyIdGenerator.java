@@ -1,14 +1,14 @@
 package com.github.ddd.tinyid.core;
 
 import com.github.ddd.common.exception.SystemException;
+import com.github.ddd.common.pojo.UserDetail;
+import com.github.ddd.common.util.UserContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -22,14 +22,17 @@ public class TinyIdGenerator {
     protected volatile SegmentId next;
     private volatile boolean isLoadingNext;
     private final Object lock = new Object();
-    private final ExecutorService THREAD_POOL = Executors.newSingleThreadExecutor(new ThreadFactory() {
-        private final AtomicInteger threadNumber = new AtomicInteger(1);
+    private final ExecutorService THREAD_POOL = new ThreadPoolExecutor(1, 1,
+            0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<>(),
+            new ThreadFactory() {
+                private final AtomicInteger threadNumber = new AtomicInteger(1);
 
-        @Override
-        public Thread newThread(@NonNull Runnable r) {
-            return new Thread(r, "tiny-id-" + threadNumber.getAndIncrement());
-        }
-    });
+                @Override
+                public Thread newThread(@NonNull Runnable r) {
+                    return new Thread(r, "tiny-id-" + threadNumber.getAndIncrement());
+                }
+            });
 
 
     public TinyIdGenerator(String bizType, SegmentIdService segmentIdService) {
@@ -56,8 +59,10 @@ public class TinyIdGenerator {
             synchronized (lock) {
                 if (next == null && !isLoadingNext) {
                     isLoadingNext = true;
+                    UserDetail currentUser = UserContextHolder.getCurrentUser();
                     THREAD_POOL.submit(() -> {
                         try {
+                            UserContextHolder.setUserContext(currentUser);
                             log.debug("loadNext SegmentId bizType {}", bizType);
                             // 无论获取下个segmentId成功与否，都要将isLoadingNext赋值为false
                             next = segmentIdService.getNextSegmentId(bizType);
