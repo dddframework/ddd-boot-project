@@ -58,7 +58,7 @@ public class ExcelTool {
             if (excelField != null) {
                 String value = excelField.name();
                 if (fieldMap.containsKey(value)) {
-                    throw new RuntimeException("导入时一个类中不能出现相同的ExcelField Value:" + value);
+                    throw new SystemException("导入时一个类中不能出现相同的ExcelField Value:" + value);
                 }
                 fieldMap.put(value, field);
                 excelFieldMap.put(value, excelField);

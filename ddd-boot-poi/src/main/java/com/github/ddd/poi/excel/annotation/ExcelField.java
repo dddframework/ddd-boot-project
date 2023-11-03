@@ -22,13 +22,6 @@ public @interface ExcelField {
     String name();
 
     /**
-     * 列索引
-     *
-     * @return
-     */
-    int column() default 0;
-
-    /**
      * 导入解析日期格式, 如果不指定 有些数字会被解析成1970年的时间
      *
      * @return
