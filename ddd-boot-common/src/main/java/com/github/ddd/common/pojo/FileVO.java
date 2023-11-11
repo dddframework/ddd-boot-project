@@ -2,11 +2,13 @@ package com.github.ddd.common.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author ranger
  */
 @Data
-public class FileVO {
+public class FileVO implements Serializable {
     /**
      * 文件名
      */

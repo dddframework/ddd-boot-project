@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author ranger
  */
-public interface Tree<ID> {
+public interface TreeNode<T, ID> {
     /**
      * 获取ID
      *
@@ -40,12 +40,12 @@ public interface Tree<ID> {
      *
      * @return children
      */
-    List<Tree<ID>> children();
+    List<T> children();
 
     /**
      * 设置子集
      *
      * @param children children
      */
-    void fillChildren(List<Tree<ID>> children);
+    void fillChildren(List<T> children);
 }
