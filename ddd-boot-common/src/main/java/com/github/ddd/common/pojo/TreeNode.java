@@ -29,13 +29,6 @@ public interface TreeNode<T, ID> {
     String name();
 
     /**
-     * 权重
-     *
-     * @return weight
-     */
-    Integer weight();
-
-    /**
      * 子节点
      *
      * @return children

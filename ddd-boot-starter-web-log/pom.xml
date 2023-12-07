@@ -23,7 +23,15 @@
         </dependency>
         <dependency>
             <groupId>io.github.dddframework</groupId>
+            <artifactId>ddd-boot-starter-tenant</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.dddframework</groupId>
             <artifactId>ddd-boot-starter-tinyid</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
     </dependencies>
 

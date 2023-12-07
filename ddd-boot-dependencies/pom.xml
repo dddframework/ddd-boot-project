@@ -101,7 +101,11 @@
                 <artifactId>ddd-boot-starter-xxl-job</artifactId>
                 <version>${ddd.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>io.github.dddframework</groupId>
+                <artifactId>ddd-boot-starter-tenant</artifactId>
+                <version>2.0.0</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>

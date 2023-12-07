@@ -1,8 +1,5 @@
 package com.github.ddd.web.exception;
 
-import com.github.ddd.common.exception.ClientException;
-import com.github.ddd.common.exception.ErrorCodeEnum;
-import com.github.ddd.common.exception.ServiceException;
 import com.github.ddd.common.exception.SystemException;
 import com.github.ddd.common.pojo.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -37,19 +34,6 @@ public class GlobalExceptionHandler {
         return ServerResponse.createErrorMsg(message.toString());
     }
 
-    @ExceptionHandler(ClientException.class)
-    @ResponseBody
-    public ServerResponse<?> handleClientException(HttpServletRequest request, ClientException e) {
-        StackTraceElement[] stackTrace = e.getStackTrace();
-        StackTraceElement root = stackTrace[0];
-        log.warn("请求路径 {}, 用户端异常: {}  对应代码 【{}】【{}】【{}】",
-                request.getRequestURI(),
-                e.getMessage(),
-                root.getClassName(),
-                root.getMethodName(),
-                root.getLineNumber());
-        return ServerResponse.createErrorMsg(e.getMessage());
-    }
 
     @ExceptionHandler(SystemException.class)
     @ResponseBody
@@ -62,31 +46,7 @@ public class GlobalExceptionHandler {
                 root.getClassName(),
                 root.getMethodName(),
                 root.getLineNumber());
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.SYSTEM_ERROR.getCode());
-        response.setErrorMessage(e.getMessage());
-        response.setShowType(ServerResponse.ShowType.ERROR);
-        return response;
-    }
-
-    @ExceptionHandler(ServiceException.class)
-    @ResponseBody
-    public ServerResponse<?> handleServiceException(HttpServletRequest request, ServiceException e) {
-        StackTraceElement[] stackTrace = e.getStackTrace();
-        StackTraceElement root = stackTrace[0];
-        log.warn("请求路径 {}, 第三方服务异常: {}  对应代码 【{}】【{}】【{}】",
-                request.getRequestURI(),
-                e.getMessage(),
-                root.getClassName(),
-                root.getMethodName(),
-                root.getLineNumber());
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.SERVICE_ERROR.getCode());
-        response.setErrorMessage(e.getMessage());
-        response.setShowType(ServerResponse.ShowType.ERROR);
-        return response;
+        return ServerResponse.createErrorMsg(e.getMessage());
     }
 
 
@@ -100,23 +60,13 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ServerResponse<?> handleNullPointerException(HttpServletRequest request, NullPointerException e) {
         log.error("请求路径 {}, 空引用异常: ", request.getRequestURI(), e);
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.SYSTEM_ERROR.getCode());
-        response.setErrorMessage("空引用错误");
-        response.setShowType(ServerResponse.ShowType.ERROR);
-        return response;
+        return ServerResponse.createError("B0002","空引用错误");
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ServerResponse<?> handleLastException(HttpServletRequest request, Exception e) {
         log.error("请求路径 {}, 未知异常: ", request.getRequestURI(), e);
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.SYSTEM_ERROR.getCode());
-        response.setErrorMessage("服务器未知错误");
-        response.setShowType(ServerResponse.ShowType.ERROR);
-        return response;
+        return ServerResponse.createError("B0000","未知异常");
     }
 }

@@ -5,8 +5,9 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.github.ddd.common.pojo.UserDetail;
 import com.github.ddd.common.util.JacksonUtil;
 import com.github.ddd.common.util.UserContextHolder;
+import com.github.ddd.tenant.spring.boot.autoconfigure.TenantProperties;
 import com.github.ddd.tinyid.core.TinyIdUtil;
-import com.github.ddd.web.log.spring.boot.autoconfigure.TenantProperties;
+import com.github.ddd.web.log.spring.boot.autoconfigure.WebLogProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -48,6 +49,7 @@ public class LogAdvice implements MethodInterceptor {
     }
 
     private final JdbcTemplate jdbcTemplate;
+    private final WebLogProperties webLogProperties;
     private final TenantProperties tenantProperties;
 
     private final String sql = "INSERT INTO %s(`id`, `name`, `user_id`, `nickname`, `request_uri`, `user_agent`, `client_ip`, `result`, `time`, `create_time`, `request_params`, `exception`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -114,7 +116,7 @@ public class LogAdvice implements MethodInterceptor {
     }
 
     private String geBizLogTable() {
-        String bizLogTable = tenantProperties.getBizLogTable();
+        String bizLogTable = webLogProperties.getBizLogTable();
         // 启用多租户模式
         if (tenantProperties.isEnable()) {
             String prefix = tenantProperties.getSchemaPrefix();

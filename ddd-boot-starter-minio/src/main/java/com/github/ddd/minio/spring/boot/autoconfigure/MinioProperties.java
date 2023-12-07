@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author ranger
  */
 @Data
-@ConfigurationProperties(prefix = "minio")
+@ConfigurationProperties(prefix = "ddd.minio")
 public class MinioProperties {
 
     /**

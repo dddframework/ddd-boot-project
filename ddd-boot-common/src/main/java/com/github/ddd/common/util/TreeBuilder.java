@@ -1,7 +1,6 @@
 package com.github.ddd.common.util;
 
 import cn.hutool.core.collection.CollUtil;
-import com.github.ddd.common.exception.ClientException;
 import com.github.ddd.common.exception.SystemException;
 import com.github.ddd.common.pojo.TreeNode;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,7 @@ public class TreeBuilder<T extends TreeNode<T, ID>, ID> {
 
     public TreeBuilder(Collection<T> nodeList) {
         if (CollUtil.isEmpty(nodeList)) {
-            throw new ClientException("数据集不能为空");
+            throw new SystemException("数据集不能为空");
         }
         // 构建父子关系
         for (T data : nodeList) {
@@ -73,11 +72,11 @@ public class TreeBuilder<T extends TreeNode<T, ID>, ID> {
     /**
      * 构建树
      *
-     * @param topId 顶级节点
-     * @param sort  是否排序
+     * @param topId     顶级节点
+     * @param comparing 排序器
      * @return List<T>
      */
-    public List<T> buildTree(ID topId, boolean sort) {
+    public List<T> buildTree(ID topId, Comparator<T> comparing) {
         List<T> trees = pTreeMap.get(topId);
         if (trees == null) {
             return new ArrayList<>();
@@ -85,10 +84,10 @@ public class TreeBuilder<T extends TreeNode<T, ID>, ID> {
         for (T tree : trees) {
             buildTree(tree, pTreeMap, 1);
         }
-        if (sort) {
-            trees.sort(Comparator.comparing(TreeNode::weight));
+        if (comparing != null) {
+            trees.sort(comparing);
             for (T tree : trees) {
-                sortTree(tree);
+                sortTree(tree, comparing);
             }
         }
         return trees;
@@ -97,13 +96,13 @@ public class TreeBuilder<T extends TreeNode<T, ID>, ID> {
     /**
      * 构建单树
      *
-     * @param topId 顶级节点
-     * @param sort  是否排序
+     * @param topId     顶级节点
+     * @param comparing 排序器
      * @return T
      */
-    public T buildSingleTree(ID topId, boolean sort) {
-        List<T> trees = buildTree(topId, sort);
-        if (CollUtil.isEmpty(trees)){
+    public T buildSingleTree(ID topId, Comparator<T> comparing) {
+        List<T> trees = buildTree(topId, comparing);
+        if (CollUtil.isEmpty(trees)) {
             return null;
         }
         return trees.get(0);
@@ -112,14 +111,15 @@ public class TreeBuilder<T extends TreeNode<T, ID>, ID> {
     /**
      * 排序树
      *
-     * @param tree tree
+     * @param tree      tree
+     * @param comparing 排序器
      */
-    public void sortTree(T tree) {
+    public void sortTree(T tree, Comparator<T> comparing) {
         List<T> children = tree.children();
         if (children != null) {
-            children.sort(Comparator.comparing(TreeNode::weight));
+            children.sort(comparing);
             for (T child : children) {
-                sortTree(child);
+                sortTree(child, comparing);
             }
         }
     }

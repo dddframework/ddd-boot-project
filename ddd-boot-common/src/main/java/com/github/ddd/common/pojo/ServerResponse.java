@@ -32,10 +32,6 @@ public class ServerResponse<T> implements Serializable {
      */
     private String errorMessage;
     /**
-     * 错误显示方式： 0 silent; 1 message.warn; 2 message.error; 4 notification; 9 page
-     */
-    private String showType;
-    /**
      * 方便后端排查：唯一的请求ID
      */
     private String traceId;
@@ -44,119 +40,44 @@ public class ServerResponse<T> implements Serializable {
      */
     private String host;
 
-
-    public interface ShowType {
-        /**
-         * 静默
-         */
-        String SILENT = "0";
-        /**
-         * 警告
-         */
-        String WARN = "1";
-        /**
-         * 错误
-         */
-        String ERROR = "2";
-        /**
-         * 通知
-         */
-        String NOTIFICATION = "4";
-        /**
-         * 另开页面展示
-         */
-        String PAGE = "9";
-    }
-
-    /**
-     * 成功响应
-     */
-    public static ServerResponse<?> createSuccess() {
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(true);
-        return response;
-    }
-
     /**
      * 成功响应
      */
     public static <T> ServerResponse<T> createSuccess(T data) {
         ServerResponse<T> response = new ServerResponse<>();
         response.setSuccess(true);
+        response.setErrorCode(ErrorCodeEnum.SUCCESS.getCode());
+        response.setErrorMessage(ErrorCodeEnum.SUCCESS.getCode());
         response.setData(data);
         return response;
     }
 
     /**
-     * Silent失败响应
+     * 成功响应
      */
-    public static ServerResponse<?> createSilentMsg(String msg) {
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.USER_ERROR.getCode());
-        response.setErrorMessage(msg);
-        response.setShowType(ShowType.SILENT);
-        return response;
-    }
-
-    /**
-     * Warn失败响应
-     */
-    public static ServerResponse<?> createWarnMsg(String msg) {
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.USER_ERROR.getCode());
-        response.setErrorMessage(msg);
-        response.setShowType(ShowType.WARN);
-        return response;
+    public static ServerResponse<?> createSuccess() {
+        return createSuccess(null);
     }
 
     /**
      * Error失败响应
      */
     public static ServerResponse<?> createErrorMsg(String msg) {
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.USER_ERROR.getCode());
-        response.setErrorMessage(msg);
-        response.setShowType(ShowType.ERROR);
-        return response;
+        return createError(ErrorCodeEnum.SYSTEM_ERROR.getCode(), msg);
     }
 
 
     /**
-     * Error失败响应
+     * 创建失败响应消息
+     *
+     * @param msg
+     * @return
      */
     public static ServerResponse<?> createError(String code, String msg) {
         ServerResponse<?> response = new ServerResponse<>();
         response.setSuccess(false);
         response.setErrorCode(code);
         response.setErrorMessage(msg);
-        response.setShowType(ShowType.ERROR);
-        return response;
-    }
-
-    /**
-     * notification失败响应
-     */
-    public static ServerResponse<?> createNotificationMsg(String msg) {
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.USER_ERROR.getCode());
-        response.setErrorMessage(msg);
-        response.setShowType(ShowType.NOTIFICATION);
-        return response;
-    }
-
-    /**
-     * page失败响应
-     */
-    public static ServerResponse<?> createPageMsg(String msg) {
-        ServerResponse<?> response = new ServerResponse<>();
-        response.setSuccess(false);
-        response.setErrorCode(ErrorCodeEnum.USER_ERROR.getCode());
-        response.setErrorMessage(msg);
-        response.setShowType(ShowType.PAGE);
         return response;
     }
 }

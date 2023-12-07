@@ -9,17 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author ranger
  */
 @Data
-@ConfigurationProperties(prefix = "tenant-mode")
-public class TenantProperties {
-
-    /**
-     * 是否开启多租户模式
-     */
-    private boolean enable = false;
-    /**
-     * Schema 前缀
-     */
-    private String schemaPrefix = "";
+@ConfigurationProperties(prefix = "ddd.tinyid")
+public class TinyIdProperties {
     /**
      * TinyId 数据表名
      */

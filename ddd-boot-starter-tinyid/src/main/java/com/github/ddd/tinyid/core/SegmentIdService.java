@@ -3,7 +3,8 @@ package com.github.ddd.tinyid.core;
 import cn.hutool.core.util.StrUtil;
 import com.github.ddd.common.exception.SystemException;
 import com.github.ddd.common.util.UserContextHolder;
-import com.github.ddd.tinyid.spring.boot.autoconfigure.TenantProperties;
+import com.github.ddd.tenant.spring.boot.autoconfigure.TenantProperties;
+import com.github.ddd.tinyid.spring.boot.autoconfigure.TinyIdProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -26,13 +27,14 @@ public class SegmentIdService {
     public static final int LOADING_PERCENT = 20;
 
     private final JdbcTemplate jdbcTemplate;
+    private final TinyIdProperties tinyIdProperties;
     private final TenantProperties tenantProperties;
 
     private final static String QUERY_TINY_ID = "select * from %s where biz_type = ? FOR UPDATE";
     private final static String UPDATE_TINY_ID = "update %s set max_id = ?, update_time= ? where max_id = ? and biz_type = ?";
 
     private String geTinyIdTable() {
-        String tinyIdTable = tenantProperties.getTinyIdTable();
+        String tinyIdTable = tinyIdProperties.getTinyIdTable();
         // 启用多租户模式
         if (tenantProperties.isEnable()) {
             String prefix = tenantProperties.getSchemaPrefix();

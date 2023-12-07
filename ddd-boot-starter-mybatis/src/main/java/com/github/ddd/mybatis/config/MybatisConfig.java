@@ -8,8 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import com.github.ddd.common.util.UserContextHolder;
 import com.github.ddd.mybatis.core.handler.DefaultDbFieldHandler;
 import com.github.ddd.mybatis.exception.DaoExceptionHandler;
+import com.github.ddd.tenant.spring.boot.autoconfigure.TenantProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -20,9 +21,9 @@ import org.springframework.core.annotation.Order;
  * @author ranger
  */
 @RequiredArgsConstructor
-@EnableConfigurationProperties(TenantProperties.class)
 @Configuration
 @Order(99)
+@Slf4j
 public class MybatisConfig {
 
     private final TenantProperties tenantProperties;
@@ -46,6 +47,9 @@ public class MybatisConfig {
                 return StrUtil.format("`{}{}`.`{}`", prefix, tenantId, tableName);
             });
             mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+            log.info("mybatis 启用多租户模式 租户数据库前缀 {}", prefix);
+        } else {
+            log.info("mybatis 启用单体模式");
         }
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         return mybatisPlusInterceptor;

@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @version 1.0
  */
 @Data
-@ConfigurationProperties(prefix = "local-file")
+@ConfigurationProperties(prefix = "ddd.local-file")
 public class LocalFileConfig {
 
     /**

@@ -51,11 +51,7 @@ public class UserDetail implements Serializable {
      * @return UserDetail
      */
     public static UserDetail createSystemUser() {
-        UserDetail userDetail = new UserDetail();
-        userDetail.setUserId(0L);
-        userDetail.setUsername("系统");
-        userDetail.setNickname("系统");
-        return userDetail;
+        return createSystemUser(0L);
     }
 
 

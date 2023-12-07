@@ -15,7 +15,7 @@ import java.io.InputStream;
  */
 public class MultipartFileUtil {
 
-    public static MultipartFile to(File file) {
+    public static MultipartFile from(File file) {
         boolean f = file.isFile();
         if (!f){
             throw new SystemException("必须是文件");
@@ -28,7 +28,7 @@ public class MultipartFileUtil {
         }
     }
 
-    public static MultipartFile to(String fileName, InputStream stream) {
+    public static MultipartFile from(String fileName, InputStream stream) {
         try {
             return new MockMultipartFile(fileName, fileName, null, FileCopyUtils.copyToByteArray(stream));
         } catch (IOException e) {
@@ -36,7 +36,7 @@ public class MultipartFileUtil {
         }
     }
 
-    public static MultipartFile to(String fileName, byte[] bytes) {
+    public static MultipartFile from(String fileName, byte[] bytes) {
         return new MockMultipartFile(fileName, fileName, null, bytes);
     }
 }

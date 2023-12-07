@@ -100,7 +100,12 @@ public class ExcelTool {
             dataList = new ArrayList<>();
             dataList.add(ReflectUtil.newInstance(tClass));
         }
-        ExcelWriter excelWriter = ExcelUtil.getWriter(true);
+        ExcelWriter excelWriter;
+        if (collection.size() < 50000) {
+            excelWriter = ExcelUtil.getWriter(true);
+        } else {
+            excelWriter = ExcelUtil.getBigWriter();
+        }
         List<String> head = new ArrayList<>();
         List<Field> fieldList = new ArrayList<>();
         List<ExcelField> excelFieldList = new ArrayList<>();

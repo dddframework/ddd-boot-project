@@ -37,9 +37,9 @@ public class XxlJobConfig {
     @Conditional(XxlCondition.class)
     public XxlJobSpringExecutor xxlJobExecutor() {
         if (enable) {
-            log.info("xxl-job 配置初始化。。。。。。。。。。。。。。。。。");
+            log.info("xxl-job 启用。。。。。。。。。。。。。。。。。");
         } else {
-            log.warn("xxl-job 未启用。。。。。。。。。。。。。。。。。。。");
+            log.warn("xxl-job 禁用。。。。。。。。。。。。。。。。。。。");
         }
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
         xxlJobSpringExecutor.setAdminAddresses(adminAddresses);

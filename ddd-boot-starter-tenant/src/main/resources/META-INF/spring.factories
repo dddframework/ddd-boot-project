@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.ddd.tenant.spring.boot.autoconfigure.TenantConfig

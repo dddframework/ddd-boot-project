@@ -1,16 +1,13 @@
-package com.github.ddd.web.log.spring.boot.autoconfigure;
+package com.github.ddd.tenant.spring.boot.autoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
- * 数据库租户模式配置
- *
  * @author ranger
  */
 @Data
-@ConfigurationProperties(prefix = "tenant-mode")
+@ConfigurationProperties(prefix = "ddd.tenant")
 public class TenantProperties {
 
     /**
@@ -21,8 +18,4 @@ public class TenantProperties {
      * Schema 前缀
      */
     private String schemaPrefix = "";
-    /**
-     * 业务日志 数据表名
-     */
-    private String bizLogTable = "sys_log";
 }

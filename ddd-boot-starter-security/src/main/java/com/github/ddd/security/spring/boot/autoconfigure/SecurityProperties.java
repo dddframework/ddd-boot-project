@@ -9,7 +9,7 @@ import java.util.List;
  * @author ranger
  */
 @Data
-@ConfigurationProperties(prefix = "security")
+@ConfigurationProperties(prefix = "ddd.security")
 public class SecurityProperties {
     /**
      * 白名单
@@ -26,5 +26,5 @@ public class SecurityProperties {
     /**
      * 缓存前缀
      */
-    public String sessionPrefix = "ddd:sessions";
+    public String sessionPrefix = "ddd::sessions";
 }
