@@ -1,4 +1,4 @@
-package com.github.ddd.mybatis.config;
+package com.github.ddd.mybatis.spring.boot.autoconfigure;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;

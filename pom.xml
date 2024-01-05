@@ -28,8 +28,9 @@
         <module>ddd-boot-starter-minio</module>
         <module>ddd-boot-starter-xxl-job</module>
         <module>ddd-boot-starter-web-log</module>
-        <module>ddd-boot-poi</module>
         <module>ddd-boot-starter-tenant</module>
+        <module>ddd-boot-poi</module>
+        <module>ddd-boot-starter-jdbc</module>
     </modules>
 
     <properties>

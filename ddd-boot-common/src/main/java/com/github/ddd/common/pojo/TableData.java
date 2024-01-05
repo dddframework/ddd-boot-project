@@ -30,6 +30,10 @@ public class TableData<T> implements Serializable {
      */
     private long total;
     /**
+     * 总页数
+     */
+    private long totalPage;
+    /**
      * 数据
      */
     private Collection<T> list;
