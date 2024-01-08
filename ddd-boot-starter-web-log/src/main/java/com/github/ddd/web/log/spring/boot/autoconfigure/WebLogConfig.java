@@ -1,5 +1,6 @@
 package com.github.ddd.web.log.spring.boot.autoconfigure;
 
+import com.github.ddd.tenant.core.TenantDbHandler;
 import com.github.ddd.tenant.spring.boot.autoconfigure.TenantProperties;
 import com.github.ddd.web.log.core.LogAdvice;
 import com.github.ddd.web.log.core.LogAdvisor;
@@ -18,13 +19,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @EnableConfigurationProperties(WebLogProperties.class)
 public class WebLogConfig {
 
-    private final TenantProperties tenantProperties;
+    private final TenantDbHandler tenantDbHandler;
 
     @Bean
     public LogAdvisor init(JdbcTemplate jdbcTemplate, WebLogProperties webLogProperties) {
         LogAdvisor logAdvisor = new LogAdvisor();
         logAdvisor.setLogPointCut(new LogPointCut());
-        logAdvisor.setAdvice(new LogAdvice(jdbcTemplate, webLogProperties, tenantProperties));
+        logAdvisor.setAdvice(new LogAdvice(jdbcTemplate, webLogProperties, tenantDbHandler));
         return logAdvisor;
     }
 }

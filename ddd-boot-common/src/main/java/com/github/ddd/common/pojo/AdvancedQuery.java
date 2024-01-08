@@ -56,6 +56,38 @@ public class AdvancedQuery {
     }
 
     /**
+     * 追加查询条件
+     *
+     * @param f
+     * @return
+     */
+    public AdvancedQuery appendWhereIsNULL(String f) {
+        ColumnQuery e = new ColumnQuery();
+        e.setF(f);
+        e.setO("IS NULL");
+        e.setV(null);
+        e.setT("AND");
+        columnQueries.add(0, e);
+        return this;
+    }
+
+    /**
+     * 追加查询条件
+     *
+     * @param f
+     * @return
+     */
+    public AdvancedQuery appendWhereIsNotNULL(String f) {
+        ColumnQuery e = new ColumnQuery();
+        e.setF(f);
+        e.setO("IS NOT NULL");
+        e.setV(null);
+        e.setT("AND");
+        columnQueries.add(0, e);
+        return this;
+    }
+
+    /**
      * 多字段OR查询
      *
      * @param ff

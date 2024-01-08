@@ -18,7 +18,6 @@ public class BaseAuditDO extends BaseDO implements Serializable {
      * 创建者id
      */
     private Long creatorId;
-
     /**
      * 创建者姓名
      */

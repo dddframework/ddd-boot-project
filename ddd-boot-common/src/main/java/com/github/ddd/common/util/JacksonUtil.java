@@ -45,7 +45,7 @@ public class JacksonUtil {
      * @param <T>           T
      * @return T
      */
-    public static <T> T toCollection(String jsonArray, TypeReference<T> typeReference) {
+    public static <T> T toType(String jsonArray, TypeReference<T> typeReference) {
         try {
             return MAPPER.readValue(jsonArray, typeReference);
         } catch (JsonProcessingException e) {
@@ -62,7 +62,7 @@ public class JacksonUtil {
      * @return T
      */
     public static <T> List<T> toList(String jsonArray, Class<T> tClass) {
-        return toCollection(jsonArray, new TypeReference<List<T>>() {
+        return toType(jsonArray, new TypeReference<List<T>>() {
             @Override
             public Type getType() {
                 return super.getType();
@@ -78,7 +78,7 @@ public class JacksonUtil {
      * @return T
      */
     public static <T> Set<T> toSet(String jsonArray, Class<T> tClass) {
-        return toCollection(jsonArray, new TypeReference<Set<T>>() {
+        return toType(jsonArray, new TypeReference<Set<T>>() {
             @Override
             public Type getType() {
                 return super.getType();

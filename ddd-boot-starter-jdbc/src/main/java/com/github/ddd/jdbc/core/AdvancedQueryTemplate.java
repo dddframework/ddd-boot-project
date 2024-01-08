@@ -7,9 +7,8 @@ import com.github.ddd.common.pojo.AdvancedQuery;
 import com.github.ddd.common.pojo.ColumnQuery;
 import com.github.ddd.common.pojo.SortingField;
 import com.github.ddd.common.pojo.TableData;
-import com.github.ddd.common.util.UserContextHolder;
 import com.github.ddd.jdbc.util.SqlUtils;
-import com.github.ddd.jdbc.util.TableNameParser;
+import com.github.ddd.tenant.core.TenantDbHandler;
 import com.github.ddd.tenant.spring.boot.autoconfigure.TenantProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +28,8 @@ import java.util.Stack;
 public class AdvancedQueryTemplate {
 
     private final JdbcTemplate jdbcTemplate;
-    private final TenantProperties tenantProperties;
     private final AdvancedSqlFactory advancedSqlFactory;
+    private final TenantDbHandler tenantDbHandler;
 
     /**
      * 根据Tag获取真正的SQL
@@ -67,7 +66,7 @@ public class AdvancedQueryTemplate {
         String trueSql = parseTrueSql(sql);
         List<Object> args = new ArrayList<>();
         String whereAndSortSql = handleWhereSql(query, args, true);
-        String targetSql = changeTable("SELECT * FROM ( " + trueSql + " ) totalData " + whereAndSortSql);
+        String targetSql = tenantDbHandler.changeTable("SELECT * FROM ( " + trueSql + " ) totalData " + whereAndSortSql);
         log.debug("SQL  : {}", targetSql);
         log.debug("Params: {}", args);
         return jdbcTemplate.query(targetSql, new BeanPropertyRowMapper<>(clazz), args.toArray());
@@ -86,7 +85,7 @@ public class AdvancedQueryTemplate {
 
         List<Object> args = new ArrayList<>();
         String whereAndSortSql = handleWhereSql(query, args, true);
-        String targetSelectSql = changeTable("SELECT * FROM ( " + trueSql + " ) totalData " + whereAndSortSql + " LIMIT ?, ?");
+        String targetSelectSql = tenantDbHandler.changeTable("SELECT * FROM ( " + trueSql + " ) totalData " + whereAndSortSql + " LIMIT ?, ?");
         args.add((pageNo - 1) * pageSize);
         args.add(pageSize);
         log.debug("SQL   : {}", targetSelectSql);
@@ -95,7 +94,7 @@ public class AdvancedQueryTemplate {
 
         List<Object> args1 = new ArrayList<>();
         String whereSql = handleWhereSql(query, args1, false);
-        String targetCountSql = changeTable("SELECT COUNT(*) FROM ( " + trueSql + " ) totalData " + whereSql);
+        String targetCountSql = tenantDbHandler.changeTable("SELECT COUNT(*) FROM ( " + trueSql + " ) totalData " + whereSql);
         log.debug("SQL   : {}", targetCountSql);
         log.debug("Params: {}", args1);
         Long totalCount = jdbcTemplate.queryForObject(targetCountSql, Long.class, args1.toArray());
@@ -161,39 +160,5 @@ public class AdvancedQueryTemplate {
         return stack.isEmpty();
     }
 
-    private String dynamicTableName(String tableName) {
-        // 启用SAAS模式 且不是单租户
-        if (tenantProperties.isEnable()) {
-            Long tenantId = UserContextHolder.getTenantId();
-            //`prefix`.`tableName`
-            return StrUtil.format("`{}_{}`.`{}`", tenantProperties.getSchemaPrefix(), tenantId, StrUtil.removeAll(tableName, "`"));
-        }
-        return tableName;
-    }
 
-    /**
-     * 替换表名
-     *
-     * @param sql
-     * @return
-     */
-    public String changeTable(String sql) {
-        TableNameParser parser = new TableNameParser(sql);
-        List<TableNameParser.SqlToken> names = new ArrayList<>();
-        parser.accept(names::add);
-        StringBuilder builder = new StringBuilder();
-        int last = 0;
-        for (TableNameParser.SqlToken name : names) {
-            int start = name.getStart();
-            if (start != last) {
-                builder.append(sql, last, start);
-                builder.append(dynamicTableName(name.getValue()));
-            }
-            last = name.getEnd();
-        }
-        if (last != sql.length()) {
-            builder.append(sql.substring(last));
-        }
-        return builder.toString();
-    }
 }

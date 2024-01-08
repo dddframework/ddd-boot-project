@@ -1,4 +1,4 @@
-package com.github.ddd.jdbc.util;
+package com.github.ddd.tenant.core;
 
 /**
  * Copy to jodd.util

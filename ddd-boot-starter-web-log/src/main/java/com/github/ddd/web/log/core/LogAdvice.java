@@ -5,7 +5,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.github.ddd.common.pojo.UserDetail;
 import com.github.ddd.common.util.JacksonUtil;
 import com.github.ddd.common.util.UserContextHolder;
-import com.github.ddd.tenant.spring.boot.autoconfigure.TenantProperties;
+import com.github.ddd.tenant.core.TenantDbHandler;
 import com.github.ddd.tinyid.core.TinyIdUtil;
 import com.github.ddd.web.log.spring.boot.autoconfigure.WebLogProperties;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +50,7 @@ public class LogAdvice implements MethodInterceptor {
 
     private final JdbcTemplate jdbcTemplate;
     private final WebLogProperties webLogProperties;
-    private final TenantProperties tenantProperties;
+    private final TenantDbHandler tenantDbHandler;
 
     private final String sql = "INSERT INTO %s(`id`, `name`, `user_id`, `nickname`, `request_uri`, `user_agent`, `client_ip`, `result`, `time`, `create_time`, `request_params`, `exception`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -95,7 +95,7 @@ public class LogAdvice implements MethodInterceptor {
             THREAD_POOL.submit(() -> {
                 try {
                     UserContextHolder.setUserContext(currentUser);
-                    jdbcTemplate.update(String.format(sql, geBizLogTable()),
+                    jdbcTemplate.update(String.format(sql, tenantDbHandler.parseTrueTableName(webLogProperties.getBizLogTable())),
                             sysLog.getId(),
                             sysLog.getName(),
                             sysLog.getUserId(),
@@ -113,21 +113,6 @@ public class LogAdvice implements MethodInterceptor {
                 }
             });
         }
-    }
-
-    private String geBizLogTable() {
-        String bizLogTable = webLogProperties.getBizLogTable();
-        // 启用多租户模式
-        if (tenantProperties.isEnable()) {
-            String prefix = tenantProperties.getSchemaPrefix();
-            if (StrUtil.isBlank(prefix)) {
-                throw new RuntimeException("多租户模式 前缀不能为空");
-            }
-            Long tenantId = UserContextHolder.getCurrentUser().getTenantId();
-            //`prefix`.`tableName`
-            return StrUtil.format("`{}{}`.`{}`", prefix, tenantId, bizLogTable);
-        }
-        return bizLogTable;
     }
 
     private void buildReqLog(SysLog log, MethodInvocation joinPoint) {

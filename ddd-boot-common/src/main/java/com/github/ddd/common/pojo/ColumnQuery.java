@@ -54,7 +54,11 @@ public class ColumnQuery {
         if (!LP.contains(lp) || !RP.contains(rp) || !OP.contains(o) || !TYPE.contains(t)) {
             throw new SystemException("符号不合法");
         }
-        if (v == null) {
+        if (StrUtil.equalsIgnoreCase(o, "IS NULL") ||
+                StrUtil.equalsIgnoreCase(o, "IS NOT NULL")
+        ) {
+            sqlBuilder.append(lp).append(" `").append(f).append("` ").append(o).append(" ").append(rp);
+        } else if (v == null) {
             throw new SystemException("比较值不能为空");
         }
         if (o.contains("IN") && !(v instanceof Collection)) {
@@ -68,7 +72,7 @@ public class ColumnQuery {
             } else {
                 throw new SystemException("IN 比较值不能为空");
             }
-        } else {
+        } else if (!o.contains("NULL")) {
             String op = o;
             if (op.contains("LIKE")) {
                 op = StrUtil.replace(op, "LEFT", "");
@@ -130,6 +134,6 @@ public class ColumnQuery {
     public static final List<String> TYPE = ListUtil.of("AND", "OR");
     public static final List<String> OP = ListUtil.of(">", ">=", "<", "<=", "=", "!=",
             "LIKE", "LEFT LIKE", "RIGHT LIKE", "NOT LIKE", "NOT LEFT LIKE", "NOT RIGHT LIKE",
-            "IN", "NOT IN");
+            "IN", "NOT IN", "IS NULL", "IS NOT NULL");
 
 }
