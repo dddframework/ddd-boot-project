@@ -55,7 +55,10 @@ public class SecurityConfig implements WebMvcConfigurer {
         InterceptorRegistration registration = registry
                 .addInterceptor(permissionInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/error", "/v3/api-docs/**");
+                .excludePathPatterns("/error",
+                        "/v3/api-docs/**",
+                        "/swagger/**",
+                        "/swagger-ui.html");
         if (CollUtil.isNotEmpty(whiteList)) {
             registration.excludePathPatterns(whiteList);
         }

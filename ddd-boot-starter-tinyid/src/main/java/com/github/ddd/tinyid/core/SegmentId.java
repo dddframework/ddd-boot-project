@@ -19,11 +19,11 @@ public class SegmentId {
     /**
      * increment by
      */
-    private int delta;
+    private long delta;
     /**
      * mod num
      */
-    private int remainder;
+    private long remainder;
 
     private volatile boolean init;
 

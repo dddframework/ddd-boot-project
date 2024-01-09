@@ -57,7 +57,7 @@ public class SegmentIdService {
      * @param bizType bizType
      * @return TinyId
      */
-    public TinyId queryByBizType(String bizType) {
+    private TinyId queryByBizType(String bizType) {
         return jdbcTemplate.queryForObject(String.format(QUERY_TINY_ID, tenantDbHandler.parseTrueTableName(tinyIdProperties.getTinyIdTable())), new BeanPropertyRowMapper<>(TinyId.class), bizType);
     }
 
@@ -68,7 +68,7 @@ public class SegmentIdService {
      * @param oldMaxId oldMaxId
      * @param bizType  bizType
      */
-    public void updateMaxId(Long newMaxId, Long oldMaxId, String bizType) {
+    private void updateMaxId(Long newMaxId, Long oldMaxId, String bizType) {
         int update = jdbcTemplate.update(String.format(UPDATE_TINY_ID, tenantDbHandler.parseTrueTableName(tinyIdProperties.getTinyIdTable())), newMaxId, System.currentTimeMillis(), oldMaxId, bizType);
         if (update > 0) {
             log.debug("updateMaxId success bizType {} newMaxId {}", bizType, newMaxId);
@@ -81,7 +81,7 @@ public class SegmentIdService {
      * @param tinyId TinyId
      * @return SegmentId
      */
-    public SegmentId convert(TinyId tinyId) {
+    private SegmentId convert(TinyId tinyId) {
         SegmentId segmentId = new SegmentId();
         segmentId.setCurrentId(new AtomicLong(tinyId.getMaxId() - tinyId.getStep()));
         segmentId.setMaxId(tinyId.getMaxId());

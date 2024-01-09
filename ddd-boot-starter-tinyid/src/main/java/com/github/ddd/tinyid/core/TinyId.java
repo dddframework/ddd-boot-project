@@ -18,15 +18,15 @@ public class TinyId {
     /**
      * 步长
      */
-    private Integer step;
+    private Long step;
     /**
      * 每次id增量 默认1
      */
-    private Integer delta;
+    private Long delta;
     /**
      * 余数
      */
-    private Integer remainder;
+    private Long remainder;
     /**
      * 创建时间
      */

@@ -35,10 +35,6 @@ public class SysLog {
      */
     private String requestUri;
     /**
-     * 请求参数
-     */
-    private String requestParams;
-    /**
      * 客户端信息
      */
     private String userAgent;
@@ -51,15 +47,19 @@ public class SysLog {
      */
     private String result;
     /**
+     * 操作时间
+     */
+    private Date createTime;
+    /**
      * 耗时
      */
     private Long time;
     /**
+     * 请求参数
+     */
+    private String requestParams;
+    /**
      * 异常情况
      */
     private String exception;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
 }
