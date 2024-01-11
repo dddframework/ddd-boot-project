@@ -16,7 +16,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ErrorCodeEnum {
+public enum CodeEnum {
     /**
      * 正常
      */

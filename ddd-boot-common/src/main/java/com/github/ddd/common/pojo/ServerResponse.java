@@ -1,7 +1,7 @@
 package com.github.ddd.common.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.ddd.common.exception.ErrorCodeEnum;
+import com.github.ddd.common.exception.CodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -24,21 +24,13 @@ public class ServerResponse<T> implements Serializable {
      */
     private T data;
     /**
-     * 错误码
+     * 响应码
      */
-    private String errorCode;
+    private String code;
     /**
      * 展示给用户的错误信息
      */
-    private String errorMessage;
-    /**
-     * 方便后端排查：唯一的请求ID
-     */
-    private String traceId;
-    /**
-     * 方便后端排查：当前访问服务器的主机
-     */
-    private String host;
+    private String message;
 
     /**
      * 成功响应
@@ -46,8 +38,8 @@ public class ServerResponse<T> implements Serializable {
     public static <T> ServerResponse<T> createSuccess(T data) {
         ServerResponse<T> response = new ServerResponse<>();
         response.setSuccess(true);
-        response.setErrorCode(ErrorCodeEnum.SUCCESS.getCode());
-        response.setErrorMessage(ErrorCodeEnum.SUCCESS.getCode());
+        response.setCode(CodeEnum.SUCCESS.getCode());
+        response.setMessage(CodeEnum.SUCCESS.getCode());
         response.setData(data);
         return response;
     }
@@ -63,7 +55,7 @@ public class ServerResponse<T> implements Serializable {
      * Error失败响应
      */
     public static ServerResponse<?> createErrorMsg(String msg) {
-        return createError(ErrorCodeEnum.SYSTEM_ERROR.getCode(), msg);
+        return createError(CodeEnum.SYSTEM_ERROR.getCode(), msg);
     }
 
 
@@ -76,8 +68,8 @@ public class ServerResponse<T> implements Serializable {
     public static ServerResponse<?> createError(String code, String msg) {
         ServerResponse<?> response = new ServerResponse<>();
         response.setSuccess(false);
-        response.setErrorCode(code);
-        response.setErrorMessage(msg);
+        response.setCode(code);
+        response.setMessage(msg);
         return response;
     }
 }
