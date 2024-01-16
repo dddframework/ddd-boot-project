@@ -1,5 +1,7 @@
 package com.github.ddd.common.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,11 +18,13 @@ public class BaseDO implements Serializable {
     /**
      * 创建时间
      */
+    @TableField( fill = FieldFill.INSERT)
     private Date createTime;
     /**
      * /**
      * 最后更新时间
      */
+    @TableField( fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
 

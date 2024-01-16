@@ -1,5 +1,7 @@
 package com.github.ddd.common.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,18 +19,22 @@ public class BaseAuditDO extends BaseDO implements Serializable {
     /**
      * 创建者id
      */
+    @TableField( fill = FieldFill.INSERT)
     private Long creatorId;
     /**
      * 创建者姓名
      */
+    @TableField( fill = FieldFill.INSERT)
     private String creatorName;
     /**
      * 更新者id
      */
+    @TableField( fill = FieldFill.INSERT_UPDATE)
     private Long updaterId;
     /**
      * 更新者姓名
      */
+    @TableField( fill = FieldFill.INSERT_UPDATE)
     private String updaterName;
 
 }

@@ -1,5 +1,7 @@
 package com.github.ddd.common.pojo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +18,7 @@ public class BaseTenantDO extends BaseAuditDO implements Serializable {
     /**
      * 租户id
      */
+    @TableField( fill = FieldFill.INSERT)
     private Long tenantId;
 
 

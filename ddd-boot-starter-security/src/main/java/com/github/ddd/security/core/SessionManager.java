@@ -45,6 +45,14 @@ public class SessionManager {
             userDetail.setClientId(DEFAULT_CLIENT);
         }
         String clientId = userDetail.getClientId();
+        // 禁止同时登录
+        if (!securityProperties.isConcurrent()) {
+            String sessionsKey = createCacheKey(userId, clientId, "sessions");
+            String oldSessionId = sessionCache.get(sessionsKey, String.class);
+            if (oldSessionId != null) {
+                removeSession(oldSessionId);
+            }
+        }
         Session session = new Session(userId, clientId, this.securityProperties.getSessionTime());
         saveSession(session);
         saveUserDetail(userDetail);
@@ -54,17 +62,6 @@ public class SessionManager {
     private void saveSession(Session session) {
         String sessionId = session.getId();
         sessionCache.put(sessionId, JacksonUtil.toJsonStr(session));
-        String userId = session.getUserId();
-        String clientId = session.getClientId();
-        // 禁止同时登录
-        if (!securityProperties.isConcurrent()) {
-            String sessionsKey = createCacheKey(userId, clientId, "sessions");
-            String oldSessionId = sessionCache.get(sessionsKey, String.class);
-            if (oldSessionId != null) {
-                removeSession(oldSessionId);
-            }
-            sessionCache.put(sessionsKey, sessionId);
-        }
     }
 
     public void saveUserDetail(UserDetail userDetail) {
@@ -73,7 +70,7 @@ public class SessionManager {
             userDetail.setClientId(DEFAULT_CLIENT);
         }
         String clientId = userDetail.getClientId();
-        sessionCache.put(createCacheKey(userId, clientId), JacksonUtil.toJsonStr(userDetail));
+        sessionCache.put(createCacheKey(userId, clientId, "user"), JacksonUtil.toJsonStr(userDetail));
     }
 
 
@@ -104,7 +101,7 @@ public class SessionManager {
         if (session != null) {
             String userId = session.getUserId();
             String clientId = session.getClientId();
-            String val = sessionCache.get(createCacheKey(userId, clientId), String.class);
+            String val = sessionCache.get(createCacheKey(userId, clientId, "user"), String.class);
             if (val == null) {
                 removeSession(sessionId);
                 return null;

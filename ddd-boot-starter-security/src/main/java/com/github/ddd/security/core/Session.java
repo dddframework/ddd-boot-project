@@ -27,15 +27,20 @@ public class Session implements Serializable {
     private String userId;
     private String clientId;
     private Long expiresTime;
-    private Long creationTime = System.currentTimeMillis();
-    private Long lastAccessedTime = this.creationTime;
+    private Long creationTime;
+    private Long lastAccessedTime;
     private Integer sessionTime = 1800;
 
+    public Session() {
+
+    }
 
     public Session(String userId, String clientId) {
         this.id = UUID.randomUUID().toString();
         this.userId = userId;
         this.clientId = clientId;
+        this.creationTime = System.currentTimeMillis();
+        this.lastAccessedTime = this.creationTime;
     }
 
     public Session(String userId, String clientId, int sessionTime) {
@@ -54,7 +59,7 @@ public class Session implements Serializable {
      * @return boolean
      */
     public boolean isExpired() {
-        return expiresTime < System.currentTimeMillis();
+        return expiresTime <= System.currentTimeMillis();
     }
 
     /**
