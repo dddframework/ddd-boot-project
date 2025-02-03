@@ -1,5 +1,6 @@
 package com.github.ddd.security.filter;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.github.ddd.common.pojo.ServerResponse;
 import com.github.ddd.common.pojo.UserDetail;
@@ -49,29 +50,13 @@ public class PermissionInterceptor implements HandlerInterceptor {
             return true;
         }
         // 需要权限
-        boolean and = checkPermission.and();
-        String[] value = checkPermission.value();
+        String value = checkPermission.value();
         Set<String> codes = currentUser.getAuthCodes();
-        if (codes != null) {
-            if (and) {
-                for (String v : value) {
-                    if (!codes.contains(v)) {
-                        this.outputError(response, HttpStatus.FORBIDDEN);
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                for (String v : value) {
-                    if (codes.contains(v)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
+        if (StrUtil.isNotBlank(value) && !codes.contains(value)) {
+            this.outputError(response, HttpStatus.FORBIDDEN);
+            return false;
         }
-        this.outputError(response, HttpStatus.FORBIDDEN);
-        return false;
+        return true;
     }
 
     /**

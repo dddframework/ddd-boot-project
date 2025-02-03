@@ -1,0 +1,60 @@
+package com.github.ddd.mybatis.core.weblog;
+
+import lombok.Data;
+
+import java.util.Date;
+
+/**
+ * @author ranger
+ */
+@Data
+public class WebLog {
+    /**
+     * ID
+     */
+    private Long id;
+    /**
+     * 操作名称
+     */
+    private String name;
+    /**
+     * 操作用户
+     */
+    private Long userId;
+    /**
+     * 操作用户
+     */
+    private String nickname;
+    /**
+     * 请求路径
+     */
+    private String requestUri;
+    /**
+     * 客户端信息
+     */
+    private String userAgent;
+    /**
+     * 客户端IP
+     */
+    private String clientIp;
+    /**
+     * 本次操作结果 0成功 1失败
+     */
+    private String result;
+    /**
+     * 操作时间
+     */
+    private Date createTime;
+    /**
+     * 耗时
+     */
+    private Long time;
+    /**
+     * 请求参数
+     */
+    private String requestParams;
+    /**
+     * 异常情况
+     */
+    private String exception;
+}

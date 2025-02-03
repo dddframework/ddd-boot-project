@@ -7,13 +7,20 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.github.ddd.common.util.UserContextHolder;
 import com.github.ddd.mybatis.core.handler.DefaultDbFieldHandler;
-import com.github.ddd.mybatis.exception.DaoExceptionHandler;
-import com.github.ddd.tenant.spring.boot.autoconfigure.TenantProperties;
+import com.github.ddd.mybatis.core.exception.DaoExceptionHandler;
+import com.github.ddd.mybatis.core.tenant.TenantDbHandler;
+import com.github.ddd.mybatis.core.tinyid.SegmentIdService;
+import com.github.ddd.mybatis.core.tinyid.TinyIdGeneratorFactory;
+import com.github.ddd.mybatis.core.weblog.LogAdvice;
+import com.github.ddd.mybatis.core.weblog.LogAdvisor;
+import com.github.ddd.mybatis.core.weblog.LogPointCut;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * MyBaits 配置类
@@ -24,25 +31,28 @@ import org.springframework.core.annotation.Order;
 @Configuration
 @Order(99)
 @Slf4j
+@EnableConfigurationProperties({MybatisProperties.class})
 public class MybatisConfig {
 
-    private final TenantProperties tenantProperties;
 
     /**
      * 分页插件
      */
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisProperties mybatisProperties) {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         // 启用多租户模式
-        if (tenantProperties.isEnable()) {
-            String prefix = tenantProperties.getSchemaPrefix();
+        if (mybatisProperties.isEnableSaas()) {
+            String prefix = mybatisProperties.getSchemaPrefix();
             if (StrUtil.isBlank(prefix)) {
                 throw new RuntimeException("多租户模式 前缀不能为空");
             }
             DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
             dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
                 Long tenantId = UserContextHolder.getCurrentUser().getTenantId();
+                if (StrUtil.contains(tableName,".")){
+                    return tableName;
+                }
                 //`prefix`.`tableName`
                 return StrUtil.format("`{}{}`.`{}`", prefix, tenantId, tableName);
             });
@@ -55,12 +65,37 @@ public class MybatisConfig {
         return mybatisPlusInterceptor;
     }
 
+    @Bean
+    public TenantDbHandler tenantDbHandler(MybatisProperties mybatisProperties){
+        return new TenantDbHandler(mybatisProperties);
+    }
+
+
+    @Bean
+    public SegmentIdService segmentIdService(JdbcTemplate jdbcTemplate, MybatisProperties tinyIdProperties, TenantDbHandler tenantDbHandler) {
+        return new SegmentIdService(jdbcTemplate, tinyIdProperties, tenantDbHandler);
+    }
+
+    @Bean
+    public TinyIdGeneratorFactory tinyIdGeneratorFactory(SegmentIdService segmentIdService) {
+        return new TinyIdGeneratorFactory(segmentIdService);
+    }
+
     /**
      * 自动填充参数类
      */
     @Bean
     public MetaObjectHandler defaultMetaObjectHandler() {
         return new DefaultDbFieldHandler();
+    }
+
+
+    @Bean
+    public LogAdvisor init(JdbcTemplate jdbcTemplate, MybatisProperties webLogProperties, TenantDbHandler tenantDbHandler) {
+        LogAdvisor logAdvisor = new LogAdvisor();
+        logAdvisor.setLogPointCut(new LogPointCut());
+        logAdvisor.setAdvice(new LogAdvice(jdbcTemplate, webLogProperties, tenantDbHandler));
+        return logAdvisor;
     }
 
     /**

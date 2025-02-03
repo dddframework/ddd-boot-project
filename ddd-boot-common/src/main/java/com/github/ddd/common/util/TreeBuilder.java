@@ -1,5 +1,6 @@
 package com.github.ddd.common.util;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.github.ddd.common.exception.SystemException;
 import com.github.ddd.common.pojo.TreeNode;
@@ -23,12 +24,13 @@ public class TreeBuilder<T extends TreeNode<T, ID>, ID> {
      */
     private final Map<ID, List<T>> pTreeMap = new HashMap<>();
 
-    public TreeBuilder(Collection<T> nodeList) {
+    public TreeBuilder(Collection<T> nodeList, Class<T> clazz) {
         if (CollUtil.isEmpty(nodeList)) {
             throw new SystemException("数据集不能为空");
         }
+        List<T> list = BeanUtil.copyToList(nodeList, clazz);
         // 构建父子关系
-        for (T data : nodeList) {
+        for (T data : list) {
             ID pid = data.pid();
             List<T> trees = pTreeMap.get(pid);
             if (trees == null) {
@@ -42,8 +44,8 @@ public class TreeBuilder<T extends TreeNode<T, ID>, ID> {
         }
     }
 
-    public TreeBuilder(List<T> nodeList, int maxDeep) {
-        this(nodeList);
+    public TreeBuilder(List<T> nodeList, Class<T> clazz, int maxDeep) {
+        this(nodeList, clazz);
         this.maxDeep = maxDeep;
     }
 

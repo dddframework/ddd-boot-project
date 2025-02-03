@@ -20,11 +20,11 @@ public enum CodeEnum {
     /**
      * 正常
      */
-    SUCCESS("00000", "成功"),
+    SUCCESS("200", "成功"),
     /**
      * 系统执行出错
      */
-    SYSTEM_ERROR("B0001", "系统执行出错"),
+    SYSTEM_ERROR("1", "系统执行出错"),
     ;
 
     /**
@@ -34,5 +34,5 @@ public enum CodeEnum {
     /**
      * 简单描述
      */
-    private final String description;
+    private final String desc;
 }

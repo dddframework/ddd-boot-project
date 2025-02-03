@@ -3,9 +3,9 @@ package com.github.ddd.mybatis.core.handler;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.github.ddd.common.pojo.UserDetail;
 import com.github.ddd.common.util.UserContextHolder;
-import com.github.ddd.common.pojo.BaseAuditDO;
-import com.github.ddd.common.pojo.BaseDO;
-import com.github.ddd.common.pojo.BaseTenantDO;
+import com.github.ddd.mybatis.core.base.BaseAuditDO;
+import com.github.ddd.mybatis.core.base.BaseDO;
+import com.github.ddd.mybatis.core.base.BaseTenantDO;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;
@@ -69,17 +69,14 @@ public class DefaultDbFieldHandler implements MetaObjectHandler {
         if (metaObject == null) {
             return;
         }
-        Date date = new Date();
-        UserDetail user = UserContextHolder.getCurrentUser();
         Object originalObject = metaObject.getOriginalObject();
         if (originalObject instanceof BaseDO) {
             BaseDO baseDO = (BaseDO) originalObject;
-            if (baseDO.getUpdateTime() == null) {
-                baseDO.setUpdateTime(date);
-            }
+            baseDO.setUpdateTime(new Date());
         }
         if (originalObject instanceof BaseAuditDO) {
             BaseAuditDO baseAuditDO = (BaseAuditDO) originalObject;
+            UserDetail user = UserContextHolder.getCurrentUser();
             if (user != null) {
                 Long userId = user.getUserId();
                 String nickname = user.getNickname();

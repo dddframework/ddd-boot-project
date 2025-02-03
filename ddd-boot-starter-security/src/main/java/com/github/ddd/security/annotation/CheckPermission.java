@@ -18,13 +18,6 @@ public @interface CheckPermission {
      *
      * @return 需要校验的权限码
      */
-    String[] value() default {};
-
-    /**
-     * 校验策略 AND OR
-     *
-     * @return boolean
-     */
-    boolean and() default true;
+    String value() default "";
 
 }

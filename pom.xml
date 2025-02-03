@@ -19,18 +19,10 @@
         <module>ddd-boot-dependencies</module>
         <module>ddd-boot-common</module>
         <module>ddd-boot-starter-mybatis</module>
-        <module>ddd-boot-starter-microservice</module>
         <module>ddd-boot-starter-web</module>
         <module>ddd-boot-starter-quartz</module>
-        <module>ddd-boot-starter-validation</module>
         <module>ddd-boot-starter-security</module>
-        <module>ddd-boot-starter-tinyid</module>
-        <module>ddd-boot-starter-minio</module>
         <module>ddd-boot-starter-xxl-job</module>
-        <module>ddd-boot-starter-web-log</module>
-        <module>ddd-boot-starter-tenant</module>
-        <module>ddd-boot-poi</module>
-        <module>ddd-boot-starter-jdbc</module>
     </modules>
 
     <properties>

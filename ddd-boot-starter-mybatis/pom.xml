@@ -24,6 +24,10 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.github.dddframework</groupId>
             <artifactId>ddd-boot-common</artifactId>
         </dependency>
@@ -31,10 +35,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.dddframework</groupId>
-            <artifactId>ddd-boot-starter-tenant</artifactId>
         </dependency>
     </dependencies>
 
